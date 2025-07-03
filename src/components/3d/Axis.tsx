@@ -32,7 +32,7 @@ const Axis: React.FC<AxisTypes> = ({ len, color, dir, label }) => {
             {/*prints a label only when given*/}
             {label && ( 
                 <Billboard position={labelPos}>
-                    <Text fontSize={0.5} color={color} billboard>
+                    <Text fontSize={0.5} color={color}>
                     {label}
                     </Text>
                 </Billboard>
