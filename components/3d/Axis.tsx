@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from '@react-three/drei';
+import { Text, Billboard } from '@react-three/drei';
 
 type AxisTypes = { //I hate JS so much, so TS helps and allows us to enforce types
 
@@ -31,9 +31,12 @@ const Axis: React.FC<AxisTypes> = ({ len, color, dir, label }) => {
             </mesh>
             {/*prints a label only when given*/}
             {label && ( 
-                <Text position={labelPos} fontSize={0.5} color={color}>
+                <Billboard position={labelPos}>
+                    <Text fontSize={0.5} color={color} billboard>
                     {label}
-                </Text>
+                    </Text>
+                </Billboard>
+                
                 )
             }
         </>
