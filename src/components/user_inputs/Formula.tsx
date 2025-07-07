@@ -4,7 +4,7 @@ import "./Formula.css"
 import { BlockMath } from "react-katex"
 
 const Formula = () => {
-    const [userFunction, setUserFunction] = useState("x^2")
+    const [userFunction, setUserFunction] = useState("")
     const [lowerBound, setLowerBound] = useState(0)
     const [upperBound, setUpperBound] = useState(1)
 
@@ -34,7 +34,7 @@ const Formula = () => {
                 <span>dx</span>
             </div>
             
-            <BlockMath math={`V = \\pi \\int_{${lowerBound}}^{${upperBound}} [${userFunction}]^2 dx`} />
+            <BlockMath math={`V = \\pi \\int_{${lowerBound}}^{${upperBound}} ${userFunction} dx`} />
         </div>
     )
 }
