@@ -1,13 +1,21 @@
-import React, { useState } from "react"
+
+import React from "react"
 import "katex/dist/katex.min.css"
 import "./Formula.css"
 import { BlockMath } from "react-katex"
 
-const Formula = () => {
-    const [userFunction, setUserFunction] = useState("")
-    const [lowerBound, setLowerBound] = useState(0)
-    const [upperBound, setUpperBound] = useState(1)
+// NEW: TypeScript interface for the props
+interface FormulaProps {
+    userFunction: string
+    lowerBound: number
+    upperBound: number
+    setUserFunction: (value: string) => void
+    setLowerBound: (value: number) => void
+    setUpperBound: (value: number) => void
+}
 
+// CHANGED: Now accepts props with proper TypeScript typing
+const Formula: React.FC<FormulaProps> = ({ userFunction, lowerBound, upperBound, setUserFunction, setLowerBound, setUpperBound }) => {
     return (
         <div className="formula-container">
             <div className="integral-input">

@@ -4,6 +4,11 @@ import Formula from "./components/user_inputs/Formula"
 
 function App() {
     const [showBottomTab, setShowBottomTab] = useState(false)
+    
+    // MOVED FROM Formula.tsx: The 3 state variables
+    const [userFunction, setUserFunction] = useState("x^2")
+    const [lowerBound, setLowerBound] = useState(0)
+    const [upperBound, setUpperBound] = useState(1)
 
     return (
         <div>
@@ -11,9 +16,15 @@ function App() {
                 <button className="open-tab-btn" onClick={() => setShowBottomTab(!showBottomTab)}>
                     {showBottomTab ? "Close Formula" : "Open Formula"}
                 </button>
-                {/* Displays the formula based on when you click the close and open formula button */}
                 {showBottomTab && (<div className="formula-in-bar"> 
-                    <Formula />
+                    <Formula 
+                        userFunction={userFunction}
+                        lowerBound={lowerBound}
+                        upperBound={upperBound}
+                        setUserFunction={setUserFunction}
+                        setLowerBound={setLowerBound}
+                        setUpperBound={setUpperBound}
+                    />
                     </div>
                 )}
             </div>
