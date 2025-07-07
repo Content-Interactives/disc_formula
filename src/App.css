@@ -1,6 +1,27 @@
-html, body, #root {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+body,
+html,
+#root {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
+.plot-area {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    /* No background so 3D scene is visible */
+}
+
+.ui-buttons {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 10;
+}
