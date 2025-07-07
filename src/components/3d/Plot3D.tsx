@@ -5,7 +5,7 @@ import Axis from "./Axis"
 
 const Plot3D: React.FC = () => {
     return (
-        <div style={{ width: "100vw", height: "100vw" }}>
+        <div style={{ width: "100vw", height: "100vh" }}>
             <Canvas camera={{ position: [4, 4, 10], fov: 60 }}>
                 {/* X axis: red */}
                 <Axis len={10} color="red" dir={[1, 0, 0]} label="x" />
