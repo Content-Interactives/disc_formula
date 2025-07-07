@@ -7,16 +7,13 @@ function App() {
 
     return (
         <div>
-            <div className="top-formula-bar">
-                <button
-                    className="open-tab-btn"
-                    onClick={() => setShowBottomTab(!showBottomTab)}
-                >
+            <div className="top-formula-bar"> 
+                <button className="open-tab-btn" onClick={() => setShowBottomTab(!showBottomTab)}>
                     {showBottomTab ? "Close Formula" : "Open Formula"}
                 </button>
-                {showBottomTab && (
-                    <div className="formula-in-bar">
-                        <Formula />
+                {/* Displays the formula based on when you click the close and open formula button */}
+                {showBottomTab && (<div className="formula-in-bar"> 
+                    <Formula />
                     </div>
                 )}
             </div>
