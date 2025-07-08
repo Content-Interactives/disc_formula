@@ -21,16 +21,16 @@ const Formula: React.FC<FormulaProps> = ({ userFunction, lowerBound, upperBound,
             <div className="integral-input">
                 <span>∫</span>
                 <input 
-                    type="number" 
+                    type="text" // 🔄 CHANGED: was "number", now "text" (removes spinner)
                     value={lowerBound} 
-                    onChange={(e) => setLowerBound(Number(e.target.value))} 
+                    onChange={(e) => setLowerBound(Number(e.target.value) || 0)} // 🔄 CHANGED: || 0 handles invalid input
                     placeholder="a" 
                 />
                 <span>to</span>
                 <input 
-                    type="number" 
+                    type="text" // 🔄 CHANGED: was "number", now "text" (removes spinner)
                     value={upperBound} 
-                    onChange={(e) => setUpperBound(Number(e.target.value))} 
+                    onChange={(e) => setUpperBound(Number(e.target.value) || 0)} // 🔄 CHANGED: || 0 handles invalid input
                     placeholder="b" 
                 />
                 <input 
