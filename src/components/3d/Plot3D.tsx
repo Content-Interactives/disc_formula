@@ -11,7 +11,7 @@ const FunctionCurve: React.FC<{ func: string; a: number; b: number }> = ({ func,
     const points = useMemo(() => {
         const pointsArray: [number, number, number][] = []
         
-        for (let x = a; x <= b+  0.1; x += 0.1) {
+        for (let x = a; x <= b + 0.001; x += 0.1) { // We need b + 0.00001 due to the fact of off by 1 error
             try {
                 const y = evaluate(func, { x }) as number
                 pointsArray.push([x, y, 0])
@@ -62,8 +62,8 @@ const Plot3D: React.FC<Plot3DProps> = ({
                 
                 {/* NEW: Draw the function curve using the props */}
                 <FunctionCurve func={userFunction} a={lowerBound} b={upperBound} />
-                <Line points={[[lowerBound, evaluate(userFunction, { x: lowerBound }) as number, 0], [lowerBound, 0, 0]]} color="yellow" transparent opacity={0.6} />
-                <Line points={[[upperBound, evaluate(userFunction, { x: upperBound }) as number, 0], [upperBound, 0, 0]]} color="yellow" transparent opacity={0.6} />
+                <Line points={[[lowerBound, evaluate(userFunction, { x: lowerBound }) as number, 0], [lowerBound, 0, 0]]} color="yellow" lineWidth={2} transparent opacity={0.6} />
+                <Line points={[[upperBound, evaluate(userFunction, { x: upperBound }) as number, 0], [upperBound, 0, 0]]} color="yellow" lineWidth={2} transparent opacity={0.6} />
 
                 
                 {/* Optional: Grid on the XY plane */}
