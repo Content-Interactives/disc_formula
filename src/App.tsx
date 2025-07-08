@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Plot3D from "./components/3d/Plot3D"
 import Formula from "./components/user_inputs/Formula"
+import VolumeFill from "./components/3d/VolumeFill"
 
 function App() {
     const [showBottomTab, setShowBottomTab] = useState(false)
@@ -11,6 +12,7 @@ function App() {
 
     return (
         <div>
+
             <div className="top-formula-bar"> 
                 <button className="open-tab-btn" onClick={() => setShowBottomTab(!showBottomTab)}>
                     {showBottomTab ? "Close Formula" : "Open Formula"}
@@ -33,6 +35,7 @@ function App() {
                     lowerBound={lowerBound}
                     upperBound={upperBound}
                 />
+                
             </div>
         </div>
     )
