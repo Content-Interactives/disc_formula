@@ -12,30 +12,29 @@ const FunctionCurve: React.FC<{ func: string; a: number; b: number }> = ({ func,
         const pointsArray: [number, number, number][] = []
         const rectangles = []
         
-        for (let x = a; x <= b + 0.001; x += 0.1) { // We need b + 0.00001 due to the fact of off by 1 error
+        const stepSize = 0.1
+        const numSteps = Math.floor((b - a) / stepSize)
+        
+        for (let i = 0; i <= numSteps; i++) {
+            const x = a + i * stepSize  // More precise calculation
+            
             try {
                 const y = evaluate(func, { x }) as number
                 pointsArray.push([x, y, 0])
                 
-                // Create a rectangle from x to x+0.1
-                const nextX = x - 0.1
-                const nextY = evaluate(func, { x: nextX }) as number
-                
-                rectangles.push(
-                    <Line
-                        key={x}
-                        points={[
-                            [x, 0, 0],           // Bottom left
-                            [x, y, 0],           // Top left
-                            [nextX, nextY, 0],   // Top right
-                            [nextX, 0, 0],       // Bottom right
-                            [x, 0, 0]            // Close
-                        ]}
-                        color="white"
-                        transparent
-                        opacity={0.3}
-                    />
-                )
+                // Only create rectangle if not the last point
+                if (i < numSteps) {
+                    rectangles.push(
+                        <mesh key={i} position={[x + stepSize/2, y/2, 0]}>
+                            <planeGeometry args={[stepSize, Math.abs(y)]} />
+                            <meshBasicMaterial 
+                                color={y >= 0 ? "lightblue" : "lightcoral"} 
+                                transparent 
+                                opacity={0.5}
+                            />
+                        </mesh>
+                    )
+                }
             } catch (e) {
                 pointsArray.push([x, x * x, 0])
             }
