@@ -3,39 +3,32 @@ import { Canvas } from "@react-three/fiber"
 import { OrbitControls } from "@react-three/drei"
 import { evaluate } from 'mathjs'  // NEW: Import math.js
 import Axis from "./Axis"
+import { Line } from '@react-three/drei'
 //TODO: Read and understand this equation
 
 // NEW: Component to draw the function curve with math.js
 const FunctionCurve: React.FC<{ func: string; a: number; b: number }> = ({ func, a, b }) => {
-    console.log('FunctionCurve received:', { func, a, b })
-    
     const points = useMemo(() => {
-        const arr: number[] = []
-        
-        console.log(`Calculating points for ${func} from ${a} to ${b}`)
+        const pointsArray: [number, number, number][] = []
         
         for (let x = a; x <= b; x += 0.1) {
             try {
                 const y = evaluate(func, { x }) as number
-                arr.push(x, y, 0)
+                pointsArray.push([x, y, 0])
             } catch (e) {
-                arr.push(x, x * x, 0)
+                pointsArray.push([x, x * x, 0])
             }
         }
         
-        return arr
+        return pointsArray
     }, [func, a, b])
 
     return (
-        <line>
-            <bufferGeometry>
-                <bufferAttribute
-                    attach="attributes-position"
-                    args={[new Float32Array(points), 3]}
-                />
-            </bufferGeometry>
-            <lineBasicMaterial color="yellow" />
-        </line>
+        <Line
+            points={points}
+            color="yellow"
+            lineWidth={5}  // This actually works with drei's Line!
+        />
     )
 }
 
