@@ -3,6 +3,7 @@ import React from "react"
 import "katex/dist/katex.min.css"
 import "./Formula.css"
 import { BlockMath } from "react-katex"
+import { NumericFormat } from 'react-number-format' // 🆕 NEW: Import the library
 
 // NEW: TypeScript interface for the props
 interface FormulaProps {
@@ -14,24 +15,21 @@ interface FormulaProps {
     setUpperBound: (value: number) => void
 }
 
-// CHANGED: Now accepts props with proper TypeScript typing
 const Formula: React.FC<FormulaProps> = ({ userFunction, lowerBound, upperBound, setUserFunction, setLowerBound, setUpperBound }) => {
     return (
         <div className="formula-container">
             <div className="integral-input">
                 <span>∫</span>
-                <input 
-                    type="text" // 🔄 CHANGED: was "number", now "text" (removes spinner)
-                    value={lowerBound} 
-                    onChange={(e) => setLowerBound(Number(e.target.value) || 0)} // 🔄 CHANGED: || 0 handles invalid input
-                    placeholder="a" 
+                <NumericFormat // 🔄 CHANGED: Simplified - only essential props
+                    value={lowerBound}
+                    onValueChange={(values) => setLowerBound(values.floatValue || 0)}
+                    placeholder="a"
                 />
                 <span>to</span>
-                <input 
-                    type="text" // 🔄 CHANGED: was "number", now "text" (removes spinner)
-                    value={upperBound} 
-                    onChange={(e) => setUpperBound(Number(e.target.value) || 0)} // 🔄 CHANGED: || 0 handles invalid input
-                    placeholder="b" 
+                <NumericFormat // 🔄 CHANGED: Simplified - only essential props
+                    value={upperBound}
+                    onValueChange={(values) => setUpperBound(values.floatValue || 0)}
+                    placeholder="b"
                 />
                 <input 
                     type="text" 
@@ -42,7 +40,7 @@ const Formula: React.FC<FormulaProps> = ({ userFunction, lowerBound, upperBound,
                 <span>dx</span>
             </div>
             
-            <BlockMath math={`V = \\pi \\int_{${lowerBound}}^{${upperBound}} ${userFunction} dx`} />
+            <BlockMath math={`V = \\pi \\int_{${lowerBound}}^{${upperBound}} [${userFunction}] dx`} />
         </div>
     )
 }
