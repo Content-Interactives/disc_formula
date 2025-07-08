@@ -5,7 +5,6 @@ import Formula from "./components/user_inputs/Formula"
 function App() {
     const [showBottomTab, setShowBottomTab] = useState(false)
     
-    // MOVED FROM Formula.tsx: The 3 state variables
     const [userFunction, setUserFunction] = useState("x^2")
     const [lowerBound, setLowerBound] = useState(0)
     const [upperBound, setUpperBound] = useState(1)
@@ -29,7 +28,11 @@ function App() {
                 )}
             </div>
             <div className="plot-area">
-                <Plot3D />
+                <Plot3D 
+                    userFunction={userFunction}
+                    lowerBound={lowerBound}
+                    upperBound={upperBound}
+                />
             </div>
         </div>
     )
