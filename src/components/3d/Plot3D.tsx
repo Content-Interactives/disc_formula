@@ -27,7 +27,9 @@ const FunctionCurve: React.FC<{ func: string; a: number; b: number }> = ({ func,
         <Line
             points={points}
             color="yellow"
-            lineWidth={5}  // This actually works with drei's Line!
+            lineWidth={5}
+            transparent={true}
+            opacity={0.6}
         />
     )
 }
@@ -38,33 +40,33 @@ interface Plot3DProps {
     userFunction?: string
     lowerBound?: number
     upperBound?: number
+    graphSize?: number // Add this
 }
 
 // Accept props for function and bounds
 const Plot3D: React.FC<Plot3DProps> = ({ 
     userFunction = "x^2", 
     lowerBound = 0, 
-    upperBound = 1
+    upperBound = 0,
+    graphSize = 20 // 20 -> 20x20 graph for whole xy grid
 }) => {
     return (
         <div style={{ width: "100vw", height: "100vh" }}>
             <Canvas camera={{ position: [4, 4, 10], fov: 60 }}>
                 {/* X axis: red */}
-                <Axis len={10} color="red" dir={[1, 0, 0]} label="x" />
+                <Axis len={graphSize} color="red" dir={[1, 0, 0]} label="x" />
                 {/* Y axis: green */}
-                <Axis len={10} color="blue" dir={[0, 1, 0]} label="y" />
+                <Axis len={graphSize} color="blue" dir={[0, 1, 0]} label="y" />
                 {/* Z axis: blue */}
-                <Axis len={10} color="green" dir={[0, 0, 1]} label="z" />
+                <Axis len={graphSize} color="green" dir={[0, 0, 1]} label="z" />
                 
                 {/* NEW: Draw the function curve using the props */}
                 <FunctionCurve func={userFunction} a={lowerBound} b={upperBound} />
                 
                 {/* Optional: Grid on the XY plane */}
-                <gridHelper args={[10, 10] as [number, number]} rotation={[Math.PI / 2, 0, 0]} />
+                <gridHelper args={[graphSize, graphSize] as [number, number]} rotation={[Math.PI / 2, 0, 0]} />
                 {/* Allow user to rotate/zoom the camera */}
                 <OrbitControls />
-                {/* Add a little ambient light */}
-                <ambientLight intensity={0.5} />
             </Canvas>
         </div>
     )
