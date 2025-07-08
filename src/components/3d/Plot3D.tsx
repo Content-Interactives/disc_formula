@@ -3,7 +3,7 @@ import { Canvas } from "@react-three/fiber"
 import { OrbitControls } from "@react-three/drei"
 import { evaluate } from 'mathjs'  // NEW: Import math.js
 import Axis from "./Axis"
-import { Line } from '@react-three/drei'
+import { Line } from "@react-three/drei"
 //TODO: Read and understand this equation
 
 // NEW: Component to draw the function curve with math.js
@@ -11,7 +11,7 @@ const FunctionCurve: React.FC<{ func: string; a: number; b: number }> = ({ func,
     const points = useMemo(() => {
         const pointsArray: [number, number, number][] = []
         
-        for (let x = a; x <= b; x += 0.1) {
+        for (let x = a; x <= b+  0.1; x += 0.1) {
             try {
                 const y = evaluate(func, { x }) as number
                 pointsArray.push([x, y, 0])
@@ -29,7 +29,7 @@ const FunctionCurve: React.FC<{ func: string; a: number; b: number }> = ({ func,
             color="yellow"
             lineWidth={5}
             transparent={true}
-            opacity={0.6}
+            opacity={0.5}
         />
     )
 }
@@ -62,11 +62,15 @@ const Plot3D: React.FC<Plot3DProps> = ({
                 
                 {/* NEW: Draw the function curve using the props */}
                 <FunctionCurve func={userFunction} a={lowerBound} b={upperBound} />
+                <Line points={[[lowerBound, evaluate(userFunction, { x: lowerBound }) as number, 0], [lowerBound, 0, 0]]} color="yellow" transparent opacity={0.6} />
+                <Line points={[[upperBound, evaluate(userFunction, { x: upperBound }) as number, 0], [upperBound, 0, 0]]} color="yellow" transparent opacity={0.6} />
+
                 
                 {/* Optional: Grid on the XY plane */}
                 <gridHelper args={[graphSize, graphSize] as [number, number]} rotation={[Math.PI / 2, 0, 0]} />
                 {/* Allow user to rotate/zoom the camera */}
                 <OrbitControls />
+
             </Canvas>
         </div>
     )
