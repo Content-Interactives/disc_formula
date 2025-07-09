@@ -12,26 +12,29 @@ const FunctionCurve: React.FC<{ func: string; a: number; b: number }> = ({ func,
         const pointsArray: [number, number, number][] = []
         const rectangles = []
         
+        // We need this messy code inorder to prevent a crash when the user types in 4 for lower bound and 3 for upper bound
+        const lower = Math.min(a, b)
+        const upper = Math.max(a, b)
         const stepSize = 0.1
-        const numSteps = Math.floor((b - a) / stepSize)
+        const numSteps = Math.floor((upper - lower) / stepSize)
         
-        for (let i = 0; i <= numSteps; i++) {
-            const x = a + i * stepSize  // More precise calculation
+        // Create the lines, one at a time to form the function
+        for (let i = 0; i < numSteps + 1; i++) { 
+            const x = lower + i * stepSize
             
-            try {
+            try { // We need the try, catch here incase the user puts in invalid expressions
                 const y = evaluate(func, { x }) as number
                 pointsArray.push([x, y, 0])
                 
-                // Only create rectangle if not the last point
                 if (i < numSteps) {
                     rectangles.push(
-                        <mesh key={i} position={[x + stepSize/2, y/2, 0]}>
+                        // We have this cursed 0.01 since its for the negative red looking rectangles, When the furve is downwards
+                        <mesh key={i} position={[x + stepSize/2, y/2, y >= 0 ? 0 : 0.01]}>
+
+                            {/* ThreeJS is cursed, so this is where the CENTER of the rectangle is */}
                             <planeGeometry args={[stepSize, Math.abs(y)]} />
-                            <meshBasicMaterial 
-                                color={y >= 0 ? "lightblue" : "lightcoral"} 
-                                transparent 
-                                opacity={0.5}
-                            />
+                            {/* Render each mini triangle*/}
+                            <meshBasicMaterial color={y >= 0 ? "lightblue" : "lightcoral"} transparent opacity={0.5}/>
                         </mesh>
                     )
                 }
@@ -45,6 +48,7 @@ const FunctionCurve: React.FC<{ func: string; a: number; b: number }> = ({ func,
 
     return (
         <>
+         {/* function line visual details */}
             <Line
                 points={points}
                 color="yellow"
