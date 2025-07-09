@@ -1,6 +1,6 @@
 import React, { useMemo } from "react"
 import { Canvas } from "@react-three/fiber"
-import { OrbitControls, Shape } from "@react-three/drei"
+import { OrbitControls} from "@react-three/drei"
 import { evaluate } from 'mathjs'  // NEW: Import math.js
 import Axis from "./Axis"
 import { Line } from "@react-three/drei"
