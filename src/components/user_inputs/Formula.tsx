@@ -40,7 +40,7 @@ const Formula: React.FC<FormulaProps> = ({ userFunction, lowerBound, upperBound,
                 <span>dx</span>
             </div>
             
-            <BlockMath math={`V = \\pi \\int_{${lowerBound}}^{${upperBound}} [${userFunction}] dx`} />
+            <BlockMath math={`V = \\pi \\int_{${lowerBound}}^{${upperBound}} [${userFunction}]^2 dx`} />
         </div>
     )
 }
