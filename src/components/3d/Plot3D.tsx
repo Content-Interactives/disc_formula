@@ -101,12 +101,10 @@ const Plot3D: React.FC<Plot3DProps> = ({
                 <Line points={[[lowerBound, safeEval(userFunction, lowerBound), 0], [lowerBound, 0, 0]]} color="yellow" lineWidth={2} transparent opacity={0.6} />
                 <Line points={[[upperBound, safeEval(userFunction, upperBound), 0], [upperBound, 0, 0]]} color="yellow" lineWidth={2} transparent opacity={0.6} />
                 
-                
                 {/* Optional: Grid on the XY plane */}
                 <gridHelper args={[graphSize, graphSize] as [number, number]} rotation={[Math.PI / 2, 0, 0]} />
                 {/* Allow user to rotate/zoom the camera */}
                 <OrbitControls />
-
             </Canvas>
         </div>
     )
