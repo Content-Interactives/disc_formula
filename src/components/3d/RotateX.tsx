@@ -1,27 +1,36 @@
-import React from "react"
-import { useSpring, animated } from "@react-spring/three"
+import React, { useRef, useEffect } from "react"
+import { useFrame } from "@react-three/fiber"
+import { Group } from 'three'
 
 interface RotateXProps {
     isRotating: boolean
     children: React.ReactNode
-    onRotationComplete?: () => void
+    onComplete?: () => void
 }
 
-const RotateX: React.FC<RotateXProps> = ({ isRotating, children, onRotationComplete }) => {
-    const { rotation } = useSpring({
-        rotation: isRotating ? [Math.PI * 2, 0, 0] as [number, number, number] : [0, 0, 0] as [number, number, number],
-        config: { duration: 3000 },
-        onRest: () => {
-            if (onRotationComplete) onRotationComplete()
+const RotateX: React.FC<RotateXProps> = ({ isRotating, children, onComplete }) => {
+    const groupRef = useRef<Group>(null)
+    const targetRotation = useRef(0)
+    
+    useEffect(() => {
+        if (isRotating && groupRef.current) {
+            targetRotation.current = groupRef.current.rotation.x + Math.PI * 2  // Add 360°
+        }
+    }, [isRotating])
+    
+    useFrame((_, delta) => {
+        if (isRotating && groupRef.current) {
+            groupRef.current.rotation.x += delta * 2
+            
+            // Stop after 360°
+            if (groupRef.current.rotation.x >= targetRotation.current) {
+                groupRef.current.rotation.x = targetRotation.current
+                if (onComplete) onComplete()
+            }
         }
     })
     
-    return (
-        // @ts-ignore for now to bypass typing issues
-        <animated.group rotation={rotation}>
-            {children}
-        </animated.group>
-    )
+    return <group ref={groupRef}>{children}</group>
 }
 
 export default RotateX
