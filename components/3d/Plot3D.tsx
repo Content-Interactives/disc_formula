@@ -6,8 +6,6 @@ import Axis from "./Axis"
 import RotateX from "./RotateX"
 import { Line } from "@react-three/drei"
 
-import DiscSurface from "./DiscSurface"  // Line 1: Import
-
 // Component to draw the function curve with math.js
 const FunctionCurve: React.FC<{ func: string; a: number; b: number }> = ({ func, a, b }) => {
     const points = useMemo(() => {
