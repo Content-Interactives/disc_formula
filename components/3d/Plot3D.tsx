@@ -36,7 +36,7 @@ const FunctionCurve: React.FC<{ func: string; a: number; b: number }> = ({ func,
         <Line
             points={points}
             color="yellow"
-            lineWidth={5}
+            lineWidth={1}
             transparent={true}
             opacity={0.5}
         />
