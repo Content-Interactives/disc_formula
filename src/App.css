@@ -1,0 +1,98 @@
+body,
+html,
+#root {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.top-formula-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    min-height: 60px;
+    background: #ff9800;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 0;
+    font-size: 1.2em;
+    font-weight: bold;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.open-tab-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.open-tab-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.bottom-tab {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 200px;
+    background: rgba(30, 30, 30, 0.95);
+    color: white;
+    padding: 20px;
+    z-index: 1000;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.plot-area {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    padding-top: 80px;
+}
+
+.top-right-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    background: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 100;
+    font-size: 1em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.left-formula-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    background: rgba(20, 20, 20, 0.95);
+    color: white;
+    padding: 20px;
+    z-index: 100;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
