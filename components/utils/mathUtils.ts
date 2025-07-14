@@ -7,7 +7,10 @@ export const TRAIL_STEP = Math.PI / 12  // 15 degrees
 export const DEFAULT_MAX_TRAILS = 24
 
 // Utility function for safe function evaluation
-export const evaluateFunction = (func: string, x: number): number => {
+/*
+Single point calculations
+*/
+export const evalFn = (func: string, x: number): number => {
     try {
         const y = evaluate(func, { x }) as number
         return Math.abs(y)  // Return absolute value for radius
@@ -25,7 +28,7 @@ export const getBounds = (a: number, b: number) => {
     }
 }
 
-// Utility function to generate function points
+// Make points on the curve, to 2D function
 export const generateFunctionPoints = (
     func: string, 
     a: number, 
@@ -38,14 +41,14 @@ export const generateFunctionPoints = (
     
     for (let i = 0; i <= numSteps; i++) {
         const x = lower + i * stepSize
-        const y = evaluateFunction(func, x)
+        const y = evalFn(func, x)
         points.push([x, y, 0])
     }
     
     return points
 }
 
-// Utility function to generate curve points for LatheGeometry
+// makes 3D shape
 export const generateCurvePoints = (
     func: string, 
     a: number, 
@@ -58,7 +61,7 @@ export const generateCurvePoints = (
     
     for (let i = 0; i <= numSteps; i++) {
         const x = lower + i * stepSize
-        const radius = evaluateFunction(func, x)
+        const radius = evalFn(func, x)
         
         if (radius > 0) {
             points.push({ x, radius })

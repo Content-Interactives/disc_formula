@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useMemo } from "react"
+import React, { useRef, useEffect, useState} from "react"
 import { useFrame } from "@react-three/fiber"
 import { Group } from 'three'
 
@@ -12,7 +12,7 @@ interface RotateXProps {
 const RotateX: React.FC<RotateXProps> = ({ 
     isRotating, 
     onComplete, 
-    maxTrails = 10000,
+    maxTrails = 720,
     children,
 }) => {
     const groupRef = useRef<Group>(null)
@@ -55,7 +55,7 @@ const RotateX: React.FC<RotateXProps> = ({
     return (
         <>
             {/* Trail copies - each trail is a copy of all children */}
-            {trailRotations.map((rotation, index) => (
+            {trailRotations.map((rotation) => (
                 <group key={`trail-${rotation}`} rotation={[rotation, 0, 0]}>
                     {children}  {/* Whatever was passed from Plot3D */}
                 </group>
