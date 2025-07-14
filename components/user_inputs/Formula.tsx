@@ -56,8 +56,19 @@ const Formula: React.FC<FormulaProps> = ({
             </div>
 
             <div className="inputs">
+                
                 <div className="input-field">
-                    <label>(a)</label>
+                    <label style={{ color: COLORS.upperBound }}>(b)</label>
+                    <NumericFormat
+                        value={upperBound}
+                        onValueChange={({ floatValue }) => setUpperBound(floatValue ?? 0)}
+                        allowNegative={true}
+                        className="input"
+                    />
+                </div>
+
+                <div className="input-field">
+                    <label  style={{ color: COLORS.lowerBound }}>(a)</label>
                     <NumericFormat
                         value={lowerBound}
                         onValueChange={({ floatValue }) => setLowerBound(floatValue ?? 0)}
@@ -66,16 +77,7 @@ const Formula: React.FC<FormulaProps> = ({
                     />
                 </div>
                 <div className="input-field">
-                    <label>(b)</label>
-                    <NumericFormat
-                        value={upperBound}
-                        onValueChange={({ floatValue }) => setUpperBound(floatValue ?? 0)}
-                        allowNegative={true}
-                        className="input"
-                    />
-                </div>
-                <div className="input-field">
-                    <label>f(x)</label>
+                    <label style={{ color: COLORS.function }} >f(x)</label>
                     <input
                         type="text"
                         value={userFunction}
