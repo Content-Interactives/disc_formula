@@ -1,5 +1,64 @@
 .formula-container {
+    background: #1a1a1a;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.title {
     color: white;
-    padding: 0;
-    background: transparent;
+    font-size: 1.5rem;
+    margin: 0 0 1rem;
+}
+
+.content {
+    display: flex;
+    gap: 2rem;
+}
+
+.formula-section {
+    flex: 1;
+    background: #2a2a2a;
+    padding: 1rem;
+    border-radius: 6px;
+}
+
+.explanation p {
+    color: #ff4444;
+    margin: 0.25rem 0;
+}
+
+.note {
+    color: #888 !important;
+    font-style: italic;
+}
+
+.inputs {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.input-field label {
+    color: white;
+    font-size: 0.9rem;
+}
+
+.input {
+    background: #2a2a2a;
+    border: 1px solid #3a3a3a;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+/* Override KaTeX color */
+:global(.katex) {
+    color: white;
 }

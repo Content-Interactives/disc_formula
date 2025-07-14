@@ -42,7 +42,7 @@ const Plot3D: React.FC<Plot3DProps> = ({
                 <gridHelper args={[graphSize, graphSize]} rotation={[Math.PI / 2, 0, 0]} />
                 
                 <RotateX isRotating={isRotating} onComplete={onRotationComplete}>
-                    {/* Main function curve */}
+                    {/* This part does the 3D "volume" */}
                     <Line 
                         points={generateFunctionPoints(userFunction, lowerBound, upperBound)}
                         color="yellow"
