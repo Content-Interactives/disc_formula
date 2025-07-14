@@ -1,19 +1,19 @@
-import React, { useRef, useEffect, useState } from "react"
+import React, { useRef, useEffect, useState, useMemo } from "react"
 import { useFrame } from "@react-three/fiber"
 import { Group } from 'three'
 
 interface RotateXProps {
     isRotating: boolean
-    children: React.ReactNode
     onComplete?: () => void
     maxTrails?: number
+    children: React.ReactElement | React.ReactElement[]  // This is what we render and rotate
 }
 
 const RotateX: React.FC<RotateXProps> = ({ 
     isRotating, 
-    children, 
     onComplete, 
-    maxTrails = 720
+    maxTrails = 10000,
+    children,
 }) => {
     const groupRef = useRef<Group>(null)
     const targetRotation = useRef(0)
@@ -49,19 +49,21 @@ const RotateX: React.FC<RotateXProps> = ({
             }
         }
     })
+
+    // Remove the FunctionCurve component entirely
     
     return (
         <>
-            {/* Trail copies - SAFE: Just render children as-is */}
+            {/* Trail copies - each trail is a copy of all children */}
             {trailRotations.map((rotation, index) => (
                 <group key={`trail-${rotation}`} rotation={[rotation, 0, 0]}>
-                    {children}
+                    {children}  {/* Whatever was passed from Plot3D */}
                 </group>
             ))}
             
-            {/* Current rotating function */}
+            {/* Current rotating function - the main children */}
             <group ref={groupRef}>
-                {children}
+                {children}  {/* Whatever was passed from Plot3D */}
             </group>
         </>
     )

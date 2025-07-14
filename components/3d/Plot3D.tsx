@@ -16,7 +16,7 @@ const FunctionCurve: React.FC<{ func: string; a: number; b: number }> = ({ func,
         const upper = Math.max(a, b)
         const stepSize = 0.1
         const numSteps = Math.floor((upper - lower) / stepSize)
-        
+
         // Create the lines, one at a time to form the function
         for (let i = 0; i < numSteps + 1; i++) { 
             const x = lower + i * stepSize
@@ -28,7 +28,7 @@ const FunctionCurve: React.FC<{ func: string; a: number; b: number }> = ({ func,
                 pointsArray.push([x, x * x, 0])  // Fallback
             }
         }
-        
+
         return pointsArray
     }, [func, a, b])
 
