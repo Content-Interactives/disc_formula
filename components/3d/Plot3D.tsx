@@ -3,7 +3,8 @@ import { Canvas } from "@react-three/fiber"
 import { OrbitControls, Line } from "@react-three/drei"
 import Axis from "./Axis"
 import RotateX from "./RotateX"
-import { generateFunctionPoints, evalFn } from '../utils/mathUtils'
+import { generateFunctionPoints, evalFn2D } from '../utils/mathUtils'
+import { COLORS } from '../utils/colors'
 
 interface Plot3DProps {
     userFunction: string
@@ -15,10 +16,10 @@ interface Plot3DProps {
 }
 
 const Plot3D: React.FC<Plot3DProps> = ({ 
-    userFunction = "x^2", 
-    lowerBound = 0, 
-    upperBound = 1,
-    graphSize = 20,
+    userFunction, 
+    lowerBound, 
+    upperBound,
+    graphSize = 100,
     isRotating = false,
     onRotationComplete
 }) => {
@@ -28,8 +29,6 @@ const Plot3D: React.FC<Plot3DProps> = ({
                 camera={{ position: [4, 4, 10], fov: 60 }}
                 style={{ 
                     background: '#000',
-                    width: "100%",    // Added
-                    height: "100%"    // Added
                 }}
             >
                 <ambientLight intensity={0.5} />
@@ -52,16 +51,16 @@ const Plot3D: React.FC<Plot3DProps> = ({
                     />
                     {/* Boundary lines */}
                     <Line 
-                        points={[[lowerBound, evalFn(userFunction, lowerBound), 0], [lowerBound, 0, 0]]}
-                        color="yellow" 
-                        lineWidth={1} 
+                        points={[[lowerBound, evalFn2D(userFunction, lowerBound), 0], [lowerBound, 0, 0]]}
+                        color={COLORS.lowerBound} 
+                        lineWidth={6} 
                         transparent={true}
                         opacity={0.3} 
                     />
                     <Line 
-                        points={[[upperBound, evalFn(userFunction, upperBound), 0], [upperBound, 0, 0]]}
-                        color="yellow" 
-                        lineWidth={1} 
+                        points={[[upperBound, evalFn2D(userFunction, upperBound), 0], [upperBound, 0, 0]]}
+                        color={COLORS.upperBound} 
+                        lineWidth={6} 
                         transparent={true}
                         opacity={0.3} 
                     />

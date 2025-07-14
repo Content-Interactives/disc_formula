@@ -52,16 +52,19 @@
 
 .input-field {
     display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+    flex-direction: row;  /* Changed from column to row */
+    align-items: center;  /* Centers items vertically */
+    gap: 0.5rem;         /* Space between label and input */
 }
 
 .input-field label {
+    min-width: 2rem;    /* Gives consistent space for labels */
     color: white;
     font-size: 0.9rem;
 }
 
 .input {
+    flex: 1;            /* Makes input take remaining space */
     background: #2a2a2a;
     border: 1px solid #3a3a3a;
     color: white;

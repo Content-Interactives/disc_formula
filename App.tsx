@@ -5,8 +5,8 @@ import Formula from "./components/user_inputs/Formula"
 function App() {
     const [showBottomTab, setShowBottomTab] = useState(false)
     
-    const [userFunction, setUserFunction] = useState("x")
-    const [lowerBound, setLowerBound] = useState(0)
+    const [userFunction, setUserFunction] = useState("2x")
+    const [lowerBound, setLowerBound] = useState(-1)
     const [upperBound, setUpperBound] = useState(1)
     const [isRotating, setIsRotating] = useState(false)
 

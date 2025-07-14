@@ -3,14 +3,8 @@ import 'katex/dist/katex.css'
 import { BlockMath } from 'react-katex'
 import { NumericFormat } from 'react-number-format'
 import './Formula.css'
+import { COLORS } from '../utils/colors'
 
-
-// src/components/utils/colors.ts
-const COLORS = {
-    lowerBound: '#90EE90',  // light green
-    upperBound: '#87CEEB',  // light blue
-    function: '#FFB74D'     // light orange
-}
 
 interface FormulaProps {
     userFunction: string

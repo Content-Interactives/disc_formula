@@ -6,14 +6,21 @@ export const ROTATION_SPEED = 2
 export const TRAIL_STEP = Math.PI / 12  // 15 degrees
 export const DEFAULT_MAX_TRAILS = 24
 
-// Utility function for safe function evaluation
-/*
-Single point calculations
-*/
-export const evalFn = (func: string, x: number): number => {
+// For 2D plotting - no absolute value
+export const evalFn2D = (func: string, x: number): number => {
+    try {
+        return evaluate(func, { x }) as number
+    } catch (e) {
+        console.warn(`Error evaluating function at x=${x}:`, e)
+        return x  // Fallback to x
+    }
+}
+
+// For 3D rotation - needs absolute value for radius
+export const evalFn3D = (func: string, x: number): number => {
     try {
         const y = evaluate(func, { x }) as number
-        return Math.abs(y)  // Return absolute value for radius
+        return Math.abs(y)  // Absolute value needed for radius
     } catch (e) {
         console.warn(`Error evaluating function at x=${x}:`, e)
         return Math.abs(x)  // Fallback to |x|
@@ -28,7 +35,7 @@ export const getBounds = (a: number, b: number) => {
     }
 }
 
-// Make points on the curve, to 2D function
+// For 2D function plotting
 export const generateFunctionPoints = (
     func: string, 
     a: number, 
@@ -41,14 +48,14 @@ export const generateFunctionPoints = (
     
     for (let i = 0; i <= numSteps; i++) {
         const x = lower + i * stepSize
-        const y = evalFn(func, x)
+        const y = evalFn2D(func, x)  // Use 2D evaluation
         points.push([x, y, 0])
     }
     
     return points
 }
 
-// makes 3D shape
+// For 3D rotation
 export const generateCurvePoints = (
     func: string, 
     a: number, 
@@ -61,7 +68,7 @@ export const generateCurvePoints = (
     
     for (let i = 0; i <= numSteps; i++) {
         const x = lower + i * stepSize
-        const radius = evalFn(func, x)
+        const radius = evalFn3D(func, x)  // Use 3D evaluation
         
         if (radius > 0) {
             points.push({ x, radius })
