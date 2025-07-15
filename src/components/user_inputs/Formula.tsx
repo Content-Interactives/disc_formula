@@ -7,19 +7,19 @@ import { COLORS } from '../utils/colors'
 
 
 interface FormulaProps {
-    userFunction: string
+    userFn: string
     lowerBound: number
     upperBound: number
-    setUserFunction: (func: string) => void
+    setFn: (func: string) => void
     setLowerBound: (lower: number) => void
     setUpperBound: (upper: number) => void
 }
 
 const Formula: React.FC<FormulaProps> = ({ 
-    userFunction, 
+    userFn, 
     lowerBound, 
     upperBound,
-    setUserFunction,
+    setFn,
     setLowerBound,
     setUpperBound
 }) => (
@@ -36,7 +36,7 @@ const Formula: React.FC<FormulaProps> = ({
                     }^{
                         \\color{${COLORS.upperBound}}{${upperBound}}
                     }[
-                        \\color{${COLORS.function}}{${userFunction}}
+                        \\color{${COLORS.function}}{${userFn}}
 
                     \\color{white}]^2\\,dx`} 
                 />
@@ -67,8 +67,8 @@ const Formula: React.FC<FormulaProps> = ({
                     <label style={{ color: COLORS.function }} >f(x)</label>
                     <input
                         type="text"
-                        value={userFunction}
-                        onChange={(e) => setUserFunction(e.target.value)}
+                        value={userFn}
+                        onChange={(e) => setFn(e.target.value)}
                         className="input"
                     />
                 </div>

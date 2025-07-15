@@ -7,21 +7,21 @@ import { generateFunctionPoints, evalFn2D } from '../utils/mathUtils'
 import { COLORS } from '../utils/colors'
 
 interface Plot3DProps {
-    userFunction: string
+    userFn: string
     lowerBound: number
     upperBound: number
     graphSize?: number
-    isRotating: boolean
-    onRotationComplete?: () => void
+    rotationBtn: boolean
+    afterRotateX?: () => void
 }
 
 const Plot3D: React.FC<Plot3DProps> = ({ 
-    userFunction, 
+    userFn, 
     lowerBound, 
     upperBound,
     graphSize = 100,
-    isRotating = false,
-    onRotationComplete
+    rotationBtn = false,
+    afterRotateX
 }) => {
     return (
         <div style={{ width: "100vw", height: "100vh" }}>
@@ -40,10 +40,10 @@ const Plot3D: React.FC<Plot3DProps> = ({
                 
                 <gridHelper args={[graphSize, graphSize]} rotation={[Math.PI / 2, 0, 0]} />
                 
-                <RotateX isRotating={isRotating} onComplete={onRotationComplete}>
+                <RotateX rotationBtn={rotationBtn} onComplete={afterRotateX}> 
                     {/* This part does the 3D "volume" */}
                     <Line 
-                        points={generateFunctionPoints(userFunction, lowerBound, upperBound)}
+                        points={generateFunctionPoints(userFn, lowerBound, upperBound)}
                         color="yellow"
                         lineWidth={2}
                         transparent={true}
@@ -51,14 +51,14 @@ const Plot3D: React.FC<Plot3DProps> = ({
                     />
                     {/* Boundary lines */}
                     <Line 
-                        points={[[lowerBound, evalFn2D(userFunction, lowerBound), 0], [lowerBound, 0, 0]]}
+                        points={[[lowerBound, evalFn2D(userFn, lowerBound), 0], [lowerBound, 0, 0]]}
                         color={COLORS.lowerBound} 
                         lineWidth={6} 
                         transparent={true}
                         opacity={0.3} 
                     />
                     <Line 
-                        points={[[upperBound, evalFn2D(userFunction, upperBound), 0], [upperBound, 0, 0]]}
+                        points={[[upperBound, evalFn2D(userFn, upperBound), 0], [upperBound, 0, 0]]}
                         color={COLORS.upperBound} 
                         lineWidth={6} 
                         transparent={true}

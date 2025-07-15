@@ -3,14 +3,14 @@ import { useFrame } from "@react-three/fiber"
 import { Group } from 'three'
 
 interface RotateXProps {
-    isRotating: boolean
+    rotationBtn: boolean
     onComplete?: () => void
     maxTrails?: number
     children: React.ReactElement | React.ReactElement[]  // This is what we render and rotate
 }
 
 const RotateX: React.FC<RotateXProps> = ({ 
-    isRotating, 
+    rotationBtn, 
     onComplete, 
     maxTrails = 720,
     children,
@@ -20,14 +20,14 @@ const RotateX: React.FC<RotateXProps> = ({
     const [trailRotations, setTrailRotations] = useState<number[]>([])
     
     useEffect(() => {
-        if (isRotating && groupRef.current) {
+        if (rotationBtn && groupRef.current) {
             targetRotation.current = groupRef.current.rotation.x + Math.PI * 2
             setTrailRotations([]) // Clear trails
         }
-    }, [isRotating])
+    }, [rotationBtn])
     
     useFrame((_, delta) => {
-        if (isRotating && groupRef.current) {
+        if (rotationBtn && groupRef.current) {
             const oldRotation = groupRef.current.rotation.x
             groupRef.current.rotation.x += delta * 2
             
@@ -65,6 +65,8 @@ const RotateX: React.FC<RotateXProps> = ({
             <group ref={groupRef}>
                 {children}  {/* Whatever was passed from Plot3D */}
             </group>
+
+            {/* TODO: Swap out the points w a 3D shell instead*/}
         </>
     )
 }
