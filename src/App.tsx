@@ -8,43 +8,26 @@ function App() {
     const [userFn, setFn] = useState("2x")
     const [lowerBound, setLowerBound] = useState(-1)
     const [upperBound, setUpperBound] = useState(1)
-    const [rotationBtn, toggleRotationBtn] = useState(false)
-    // Add this with your other state variables in App.tsx
-    const [discBtn, toggleDiscBtn] = useState(false)
-    const [discAnim, toggleDiscAnim] = useState(false)
+    const [rotationBtn, toggleRotate] = useState(false)
+    const [discBtn, toggleDisc] = useState(false)
 
     
-    const allowDiscBtn = () => {
-        toggleRotationBtn(false)  // Reset rotation state when complete
-        toggleDiscBtn(true)
-    }
-    // TODO: SHOW TRAIL
-    // TODO: Show disks filling in 1 at a time * Explains WHY its the disc method
-
-
-
-    // Do larger disks then smaller disks
-
-    // Later TODO: Show explination for each step
-
-
     return (
-        <div>
+        <>
             <div className="top-formula-bar"> 
                 <button className="open-tab-btn" onClick={() => displayFormula(!showFormula)}>
                     {showFormula ? "Hide" : "Show"} Formula
                 </button>
                 
-                <button className="open-tab-btn" onClick={() => toggleRotationBtn(!rotationBtn)}>
+                <button onClick={() => toggleRotate}>
                     {rotationBtn ? "Stop" : "Start"} Rotation
                 </button>
 
                 <button 
-                    className="open-tab-btn" 
-                    onClick={() => toggleDiscBtn}
-                    disabled={!discBtn}  // This disables the button until rotation is complete
+                    onClick={() => toggleDisc(!discBtn)}
+                    disabled={rotationBtn}
                 >
-                    {discAnim ? "Hide" : "Show"} Discs
+                    {discBtn ? "Hide" : "Show"} Discs
                 </button>
             </div>
 
@@ -60,17 +43,13 @@ function App() {
             )}
 
             <Plot3D 
-                userFn={userFn} 
-                lowerBound={lowerBound} 
+                userFn={userFn}
+                lowerBound={lowerBound}
                 upperBound={upperBound}
-
-                // RotateX
-                rotationBtn={rotationBtn}
-                afterRotateX={allowDiscBtn}  // Pass callback
-
-                //Disc Method
+                rotationBtn={rotationBtn}  // pass the toggle directly
+                toggleDisc={toggleDisc}
             />
-        </div>
+        </>
     )
 }
 

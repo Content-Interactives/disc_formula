@@ -1,6 +1,3 @@
-
-
-
 // src/components/3d/DiscAnimation.tsx
 import React, { useRef, useEffect } from "react"
 import { useFrame } from "@react-three/fiber"

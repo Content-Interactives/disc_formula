@@ -12,7 +12,7 @@ interface Plot3DProps {
     upperBound: number
     graphSize?: number
     rotationBtn: boolean
-    afterRotateX?: () => void
+    toggleDisc: (value: boolean) => void  // add this
 }
 
 const Plot3D: React.FC<Plot3DProps> = ({ 
@@ -21,7 +21,7 @@ const Plot3D: React.FC<Plot3DProps> = ({
     upperBound,
     graphSize = 100,
     rotationBtn = false,
-    afterRotateX
+    toggleDisc,
 }) => {
     return (
         <div style={{ width: "100vw", height: "100vh" }}>
@@ -39,8 +39,9 @@ const Plot3D: React.FC<Plot3DProps> = ({
                 <Axis len={graphSize} color="green" dir={[0, 0, 1]} label="z" />
                 
                 <gridHelper args={[graphSize, graphSize]} rotation={[Math.PI / 2, 0, 0]} />
-                
-                <RotateX rotationBtn={rotationBtn} onComplete={afterRotateX}> 
+
+                {/* toggleDisc(true) enables the disc Animation to now be pressed*/}
+                <RotateX rotationBtn={rotationBtn} onComplete={() => toggleDisc(true)}>  
                     {/* This part does the 3D "volume" */}
                     <Line 
                         points={generateFunctionPoints(userFn, lowerBound, upperBound)}
@@ -65,6 +66,8 @@ const Plot3D: React.FC<Plot3DProps> = ({
                         opacity={0.3} 
                     />
                 </RotateX>
+
+                
                 
                 <OrbitControls />
             </Canvas>

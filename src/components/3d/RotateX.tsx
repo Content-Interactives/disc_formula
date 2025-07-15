@@ -43,9 +43,11 @@ const RotateX: React.FC<RotateXProps> = ({
             }
             
             // Stop after 360°
-            if (groupRef.current.rotation.x >= targetRotation.current) {
+            if (groupRef.current.rotation.x > targetRotation.current) {
                 groupRef.current.rotation.x = targetRotation.current
-                if (onComplete) onComplete()
+                if (onComplete != null){
+                    onComplete()
+                } 
             }
         }
     })
