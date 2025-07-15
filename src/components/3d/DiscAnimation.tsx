@@ -64,7 +64,7 @@ const DiscAnimation: React.FC<DiscAnimationProps> = ({
                     rotation={disc.rotation as [number, number, number]}
                     args={[disc.radius, disc.radius, disc.height, 32]}
                     material-color="gray"
-                    material-opacity={0.3}
+                    material-opacity={0.7}
                     material-transparent
                 />
             ))}

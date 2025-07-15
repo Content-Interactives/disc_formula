@@ -31,7 +31,7 @@ const RotateX: React.FC<RotateXProps> = ({
             const oldRotation = groupRef.current.rotation.x
             groupRef.current.rotation.x += delta * 2
             
-            // Add trail every 15 degrees, keep only maxTrails
+            // Add trail every 15 degrees
             const rotationStep = Math.PI / 720
             if (Math.floor(groupRef.current.rotation.x / rotationStep) > 
                 Math.floor(oldRotation / rotationStep)) {
@@ -42,12 +42,12 @@ const RotateX: React.FC<RotateXProps> = ({
                 })
             }
             
-            // Stop after 360°
-            if (groupRef.current.rotation.x > targetRotation.current) {
+            // When rotation completes
+            if (groupRef.current.rotation.x >= targetRotation.current) {
                 groupRef.current.rotation.x = targetRotation.current
-                if (onComplete != null){
-                    onComplete()
-                } 
+                setTrailRotations([])  // Clear trails
+                // Add LatheGeometry here
+                if (onComplete) onComplete()
             }
         }
     })
@@ -67,6 +67,7 @@ const RotateX: React.FC<RotateXProps> = ({
             <group ref={groupRef}>
                 {children}  {/* Whatever was passed from Plot3D */}
             </group>
+            
 
             {/* TODO: Swap out the points w a 3D shell instead*/}
         </>

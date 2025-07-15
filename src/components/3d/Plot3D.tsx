@@ -1,4 +1,5 @@
 import React from "react"
+import { useState } from "react"
 import { Canvas } from "@react-three/fiber"
 import { OrbitControls, Line } from "@react-three/drei"
 import Axis from "./Axis"
@@ -6,6 +7,7 @@ import RotateX from "./RotateX"
 import DiscAnimation from "./DiscAnimation"
 import { generateFunctionPoints, evalFn2D } from '../utils/mathUtils'
 import { COLORS } from '../utils/colors'
+import DiscSurface from "./DiscSurface"
 
 interface Plot3DProps {
     userFn: string
@@ -26,6 +28,8 @@ const Plot3D: React.FC<Plot3DProps> = ({
     discBtn = false,
     toggleRotate,
 }) => {
+    const [showSurface, setShowSurface] = useState(false)
+
     return (
         <div style={{ width: "100vw", height: "100vh" }}>
             <Canvas 
@@ -44,7 +48,13 @@ const Plot3D: React.FC<Plot3DProps> = ({
                 <gridHelper args={[graphSize, graphSize]} rotation={[Math.PI / 2, 0, 0]} />
 
                 {/* toggleDisc(true) enables the disc Animation to now be pressed*/}
-                <RotateX rotationBtn={rotationBtn} onComplete={() => toggleRotate(false)}>  
+                <RotateX 
+                    rotationBtn={rotationBtn} 
+                    onComplete={() => {
+                        toggleRotate(false);
+                        setShowSurface(true);  // Show surface when rotation completes
+                    }}
+                >  
                     {/* This part does the 3D "volume" */}
                     <Line 
                         points={generateFunctionPoints(userFn, lowerBound, upperBound)}
@@ -70,8 +80,16 @@ const Plot3D: React.FC<Plot3DProps> = ({
                     />
                 </RotateX>
 
+                <DiscSurface 
+                    active={showSurface}  // Use separate surface state
+                    userFn={userFn}         // Need to pass this from Plot3D
+                    lowerBound={lowerBound} // Need to pass this from Plot3D
+                    upperBound={upperBound} // Need to pass this from Plot3D
+                    
+                />
+
                 <DiscAnimation 
-                    active={discBtn}
+                    active={discBtn}      // This stays controlled by discBtn
                     userFn={userFn}
                     lowerBound={lowerBound}
                     upperBound={upperBound}
