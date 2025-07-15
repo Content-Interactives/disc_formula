@@ -40,15 +40,8 @@ const Formula: React.FC<FormulaProps> = ({
 
                     \\color{white}]^2\\,dx`} 
                 />
-                {/* <div className="explanation">
-                    <p>V = volume (after rotation)</p>
-                    <p>a = smallest value of x</p>
-                    <p>b = largest value of x</p>
-                    <p>r = radius</p>
-                    <p className="note">Dont worry if you don't understand this now</p>
-                </div> */}
             </div>
-
+            {/* the inputs the user puts in, on the right of the formula*/}
             <div className="inputs">
                 
                 <div className="input-field">
