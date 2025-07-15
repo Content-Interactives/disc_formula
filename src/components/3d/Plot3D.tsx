@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber"
 import { OrbitControls, Line } from "@react-three/drei"
 import Axis from "./Axis"
 import RotateX from "./RotateX"
+import DiscAnimation from "./DiscAnimation"
 import { generateFunctionPoints, evalFn2D } from '../utils/mathUtils'
 import { COLORS } from '../utils/colors'
 
@@ -12,7 +13,8 @@ interface Plot3DProps {
     upperBound: number
     graphSize?: number
     rotationBtn: boolean
-    toggleDisc: (value: boolean) => void  // add this
+    discBtn: boolean
+    toggleRotate: (value: boolean) => void  // add this
 }
 
 const Plot3D: React.FC<Plot3DProps> = ({ 
@@ -21,7 +23,8 @@ const Plot3D: React.FC<Plot3DProps> = ({
     upperBound,
     graphSize = 100,
     rotationBtn = false,
-    toggleDisc,
+    discBtn = false,
+    toggleRotate,
 }) => {
     return (
         <div style={{ width: "100vw", height: "100vh" }}>
@@ -41,7 +44,7 @@ const Plot3D: React.FC<Plot3DProps> = ({
                 <gridHelper args={[graphSize, graphSize]} rotation={[Math.PI / 2, 0, 0]} />
 
                 {/* toggleDisc(true) enables the disc Animation to now be pressed*/}
-                <RotateX rotationBtn={rotationBtn} onComplete={() => toggleDisc(true)}>  
+                <RotateX rotationBtn={rotationBtn} onComplete={() => toggleRotate(false)}>  
                     {/* This part does the 3D "volume" */}
                     <Line 
                         points={generateFunctionPoints(userFn, lowerBound, upperBound)}
@@ -66,6 +69,13 @@ const Plot3D: React.FC<Plot3DProps> = ({
                         opacity={0.3} 
                     />
                 </RotateX>
+
+                <DiscAnimation 
+                    active={discBtn}
+                    userFn={userFn}
+                    lowerBound={lowerBound}
+                    upperBound={upperBound}
+                />
 
                 
                 

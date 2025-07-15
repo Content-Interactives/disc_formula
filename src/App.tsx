@@ -19,13 +19,13 @@ function App() {
                     {showFormula ? "Hide" : "Show"} Formula
                 </button>
                 
-                <button onClick={() => toggleRotate}>
+                <button onClick={() => toggleRotate(!rotationBtn)}>
                     {rotationBtn ? "Stop" : "Start"} Rotation
                 </button>
 
                 <button 
                     onClick={() => toggleDisc(!discBtn)}
-                    disabled={rotationBtn}
+                    disabled={discBtn === false && rotationBtn === true}  // disabled at start AND while rotating
                 >
                     {discBtn ? "Hide" : "Show"} Discs
                 </button>
@@ -46,8 +46,9 @@ function App() {
                 userFn={userFn}
                 lowerBound={lowerBound}
                 upperBound={upperBound}
-                rotationBtn={rotationBtn}  // pass the toggle directly
-                toggleDisc={toggleDisc}
+                rotationBtn={rotationBtn}
+                toggleRotate={toggleRotate}
+                discBtn={discBtn}
             />
         </>
     )
