@@ -29,7 +29,7 @@ const DiscAnimation: React.FC<DiscAnimationProps> = ({
     // Calculate all disc positions and sizes
     const discs = React.useMemo(() => {
         const discData: DiscData[] = []  // specify the type
-        const steps = 20  // Start with 20 discs
+        const steps = 10 * (upperBound - lowerBound) // Start with 20 discs
         const dx = (upperBound - lowerBound) / steps
         
         for(let x = lowerBound; x <= upperBound; x += dx) {
