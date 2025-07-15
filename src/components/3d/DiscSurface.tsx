@@ -20,7 +20,7 @@ const DiscSurface = ({ userFn, lowerBound, upperBound, active }: DiscSurfaceProp
   for (let i = 0; i <= steps; i++) {
     const x = lowerBound + ((upperBound - lowerBound) * i) / steps
     const y = Math.abs(evaluate(userFn, { x }))
-    // Flip the x coordinate by negating it
+ 
     points.push(new Vector2(y, -x)) // (radius, -height to flip)
   }
 
