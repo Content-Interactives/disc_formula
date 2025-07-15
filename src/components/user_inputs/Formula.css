@@ -1,5 +1,78 @@
 .formula-container {
+    background: #1a1a1a;
+    padding: 0.75rem;  /* Reduced padding */
+    border-radius: 8px;
+    display: flex;     /* NEW: Make container flex */
+    align-items: center; /* NEW: Center items vertically */
+    gap: 1rem;         /* NEW: Space between title and content */
+}
+
+.title {
     color: white;
-    padding: 0;
-    background: transparent;
+    font-size: 1.2rem;  /* Slightly smaller */
+    margin: 0;          /* Remove margin */
+    white-space: nowrap; /* NEW: Keep title on one line */
+    min-width: fit-content; /* NEW: Don't let title wrap */
+}
+
+.content {
+    display: flex;
+    gap: 1.5rem;       /* Slightly reduced gap */
+    flex: 1;           /* NEW: Take remaining space */
+}
+
+.formula-section {
+    flex: 1.2;        /* NEW: Give formula section slightly more space */
+    background: #2a2a2a;
+    padding: 0.75rem;  /* Reduced padding */
+    border-radius: 6px;
+    display: flex;     /* NEW: Make section flex */
+    flex-direction: column;
+    justify-content: center;
+}
+
+.explanation p {
+    color: #ff4444;
+    margin: 0.25rem 0;
+    font-size: 0.9rem; /* NEW: Slightly smaller text */
+}
+
+.note {
+    color: #888 !important;
+    font-style: italic;
+    font-size: 0.85rem; /* NEW: Even smaller note */
+}
+
+.inputs {
+    flex: 0.8;        /* NEW: Give inputs section slightly less space */
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;      /* Reduced gap */
+}
+
+.input-field {
+    display: flex;
+    flex-direction: row;  /* Changed from column to row */
+    align-items: center;  /* Centers items vertically */
+    gap: 0.5rem;         /* Space between label and input */
+}
+
+.input-field label {
+    min-width: 2rem;    /* Gives consistent space for labels */
+    color: white;
+    font-size: 0.9rem;
+}
+
+.input {
+    flex: 1;            /* Makes input take remaining space */
+    background: #2a2a2a;
+    border: 1px solid #3a3a3a;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+/* Override KaTeX color */
+:global(.katex) {
+    color: white;
 }

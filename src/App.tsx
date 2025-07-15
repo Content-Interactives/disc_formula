@@ -5,46 +5,55 @@ import Formula from "./components/user_inputs/Formula"
 function App() {
     const [showBottomTab, setShowBottomTab] = useState(false)
     
-    const [userFunction, setUserFunction] = useState("x")
-    const [lowerBound, setLowerBound] = useState(0)
+    const [userFunction, setUserFunction] = useState("2x")
+    const [lowerBound, setLowerBound] = useState(-1)
     const [upperBound, setUpperBound] = useState(1)
-    const [isRotating, setIsRotating] = useState(false)  // NEW: Add rotation state
+    const [isRotating, setIsRotating] = useState(false)
+
+    
+    const handleRotationComplete = () => {
+        setIsRotating(false)  // Reset rotation state when complete
+    }
+    // TODO: SHOW TRAIL
+    // TODO: Show disks filling in 1 at a time * Explains WHY its the disc method
+    // Do larger disks then smaller disks
+
+    // Later TODO: Show explination for each step
+
+    const handleRotationToggle = () => {
+        setIsRotating(!isRotating)  // Toggle rotation
+    }
 
     return (
         <div>
             <div className="top-formula-bar"> 
                 <button className="open-tab-btn" onClick={() => setShowBottomTab(!showBottomTab)}>
-                    {showBottomTab ? "Close Formula" : "Open Formula"}
-                </button>
-                {/* NEW: Add rotation button */}
-                <button 
-                    className="rotation-btn" 
-                    onClick={() => setIsRotating(!isRotating)}
-                    style={{ marginLeft: "10px" }}
-                >
-                    {isRotating ? "Stop Rotation" : "Start Rotation"}
+                    {showBottomTab ? "Hide" : "Show"} Formula
                 </button>
                 
-                {showBottomTab && (<div className="formula-in-bar"> 
-                    <Formula 
-                        userFunction={userFunction}
-                        lowerBound={lowerBound}
-                        upperBound={upperBound}
-                        setUserFunction={setUserFunction}
-                        setLowerBound={setLowerBound}
-                        setUpperBound={setUpperBound}
-                    />
-                    </div>
-                )}
+                <button className="open-tab-btn" onClick={handleRotationToggle}>
+                    {isRotating ? "Stop" : "Start"} Rotation
+                </button>
             </div>
-            <div className="plot-area">
-                <Plot3D 
-                    userFunction={userFunction}
-                    lowerBound={lowerBound}
+
+            {showBottomTab && (
+                <Formula 
+                    userFunction={userFunction} 
+                    lowerBound={lowerBound} 
                     upperBound={upperBound}
-                    isRotating={isRotating}  // NEW: Pass rotation state
+                    setUserFunction={setUserFunction}
+                    setLowerBound={setLowerBound}
+                    setUpperBound={setUpperBound}
                 />
-            </div>
+            )}
+
+            <Plot3D 
+                userFunction={userFunction} 
+                lowerBound={lowerBound} 
+                upperBound={upperBound}
+                isRotating={isRotating}
+                onRotationComplete={handleRotationComplete}  // Pass callback
+            />
         </div>
     )
 }

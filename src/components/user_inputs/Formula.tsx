@@ -1,49 +1,87 @@
+import React from 'react'
+import 'katex/dist/katex.css'
+import { BlockMath } from 'react-katex'
+import { NumericFormat } from 'react-number-format'
+import './Formula.css'
+import { COLORS } from '../utils/colors'
 
-import React from "react"
-import "katex/dist/katex.min.css"
-import "./Formula.css"
-import { BlockMath } from "react-katex"
-import { NumericFormat } from 'react-number-format' // 🆕 NEW: Import the library
 
-// NEW: TypeScript interface for the props
 interface FormulaProps {
     userFunction: string
     lowerBound: number
     upperBound: number
-    setUserFunction: (value: string) => void
-    setLowerBound: (value: number) => void
-    setUpperBound: (value: number) => void
+    setUserFunction: (func: string) => void
+    setLowerBound: (lower: number) => void
+    setUpperBound: (upper: number) => void
 }
 
-const Formula: React.FC<FormulaProps> = ({ userFunction, lowerBound, upperBound, setUserFunction, setLowerBound, setUpperBound }) => {
-    return (
-        <div className="formula-container">
-            <div className="integral-input">
-                <span>∫</span>
-                <NumericFormat // 🔄 CHANGED: Simplified - only essential props
-                    value={lowerBound}
-                    onValueChange={(values) => setLowerBound(values.floatValue || 0)}
-                    placeholder="a"
+const Formula: React.FC<FormulaProps> = ({ 
+    userFunction, 
+    lowerBound, 
+    upperBound,
+    setUserFunction,
+    setLowerBound,
+    setUpperBound
+}) => (
+    <div className="formula-container">
+        
+        <div className="content">
+            <div className="formula-section">
+                <h2 className="title">Disc Method</h2>
+
+                {/* This is  important for coloring the variables, This solution is very cursed, bit if you remove that {white} it will oerflow the text with orange */}
+                <BlockMath 
+                    math={`V = \\pi\\int_{
+                        \\color{${COLORS.lowerBound}}{${lowerBound}}
+                    }^{
+                        \\color{${COLORS.upperBound}}{${upperBound}}
+                    }[
+                        \\color{${COLORS.function}}{${userFunction}}
+
+                    \\color{white}]^2\\,dx`} 
                 />
-                <span>to</span>
-                <NumericFormat // 🔄 CHANGED: Simplified - only essential props
-                    value={upperBound}
-                    onValueChange={(values) => setUpperBound(values.floatValue || 0)}
-                    placeholder="b"
-                />
-                <input 
-                    type="text" 
-                    value={userFunction} 
-                    onChange={(e) => setUserFunction(e.target.value)} 
-                    placeholder="f(x)" 
-                />
-                <span>dx</span>
+                {/* <div className="explanation">
+                    <p>V = volume (after rotation)</p>
+                    <p>a = smallest value of x</p>
+                    <p>b = largest value of x</p>
+                    <p>r = radius</p>
+                    <p className="note">Dont worry if you don't understand this now</p>
+                </div> */}
             </div>
-            
-            <BlockMath math={`V = \\pi \\int_{${lowerBound}}^{${upperBound}} [${userFunction}]^2 dx`} />
+
+            <div className="inputs">
+                
+                <div className="input-field">
+                    <label style={{ color: COLORS.upperBound }}>(b)</label>
+                    <NumericFormat
+                        value={upperBound}
+                        onValueChange={({ floatValue }) => setUpperBound(floatValue ?? 0)}
+                        allowNegative={true}
+                        className="input"
+                    />
+                </div>
+
+                <div className="input-field">
+                    <label  style={{ color: COLORS.lowerBound }}>(a)</label>
+                    <NumericFormat
+                        value={lowerBound}
+                        onValueChange={({ floatValue }) => setLowerBound(floatValue ?? 0)}
+                        allowNegative={true}
+                        className="input"
+                    />
+                </div>
+                <div className="input-field">
+                    <label style={{ color: COLORS.function }} >f(x)</label>
+                    <input
+                        type="text"
+                        value={userFunction}
+                        onChange={(e) => setUserFunction(e.target.value)}
+                        className="input"
+                    />
+                </div>
+            </div>
         </div>
-    )
-}
+    </div>
+)
 
 export default Formula
-// CSS styling

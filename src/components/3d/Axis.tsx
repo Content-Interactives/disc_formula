@@ -1,6 +1,7 @@
 import React from "react"
 import { Text, Billboard } from "@react-three/drei"
 
+// This makes the function spin
 type AxisTypes = {
     //I hate JS so much, so TS helps and allows us to enforce types
 
