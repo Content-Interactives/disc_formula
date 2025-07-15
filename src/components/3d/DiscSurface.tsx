@@ -20,16 +20,17 @@ const DiscSurface = ({ userFn, lowerBound, upperBound, active }: DiscSurfaceProp
   for (let i = 0; i <= steps; i++) {
     const x = lowerBound + ((upperBound - lowerBound) * i) / steps
     const y = Math.abs(evaluate(userFn, { x }))
-    points.push(new Vector2(y, x)) // (radius, height)
+    // Flip the x coordinate by negating it
+    points.push(new Vector2(y, -x)) // (radius, -height to flip)
   }
 
   return (
-    <mesh rotation={[0, 0, Math.PI / 2]}>  {/* Rotate 90 degrees around X axis */}
+    <mesh rotation={[0, 0, Math.PI / 2]}>
       <latheGeometry args={[points]} />
       <meshPhongMaterial 
-        color="gray"    // Royal Blue - stands out against black background
+        color="gray"
         transparent={true}
-        opacity={0.5}      // Very transparent to see through
+        opacity={0.5}
         side={THREE.DoubleSide}
       />
     </mesh>
