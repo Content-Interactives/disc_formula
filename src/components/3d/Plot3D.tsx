@@ -38,8 +38,13 @@ const Plot3D: React.FC<Plot3DProps> = ({
                     background: '#000',
                 }}
             >
-                <ambientLight intensity={0.5} />
-                <directionalLight position={[10, 10, 5]} intensity={1} />
+                <ambientLight intensity={0.8} />
+                <directionalLight position={[10, 10, 5]} intensity={5} />
+                
+                {/* Add these new lights */}
+                <directionalLight position={[-10, 10, 5]} intensity={3} />  {/* Light from opposite side */}
+                <directionalLight position={[0, -10, 5]} intensity={2} />   {/* Light from below */}
+                <pointLight position={[0, 0, 10]} intensity={2} />          {/* Light from front */}
                 
                 <Axis len={graphSize} color="red" dir={[1, 0, 0]} label="x" />
                 <Axis len={graphSize} color="blue" dir={[0, 1, 0]} label="y" />
