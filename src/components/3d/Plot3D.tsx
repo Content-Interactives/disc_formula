@@ -9,6 +9,7 @@ import { generateFunctionPoints, evalFn2D } from '../utils/mathUtils'
 import { COLORS } from '../utils/colors'
 import DiscSurface from "./DiscSurface"
 
+
 interface Plot3DProps {
     userFn: string
     lowerBound: number
