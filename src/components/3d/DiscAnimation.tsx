@@ -31,8 +31,13 @@ const DiscAnimation: React.FC<DiscAnimationProps> = ({
         const arr: DiscData[] = []  // specify the type
         
         const dx = 0.1 // thickness of each disc
+
+        // This is a quick check to make sure the smaller bound, is on the left
+        const [a, b] = lowerBound < upperBound 
+        ? [lowerBound, upperBound] 
+        : [upperBound, lowerBound]
         
-        for (let x = lowerBound; x <= upperBound; x += dx) {
+        for (let x = a; x <= b; x += dx) {
 
             arr.push({
                 position: [x, 0, 0] as [number, number, number],
