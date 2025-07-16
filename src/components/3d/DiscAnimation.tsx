@@ -29,10 +29,10 @@ const DiscAnimation: React.FC<DiscAnimationProps> = ({
     // Calculate all disc positions and sizes
     const discs = React.useMemo(() => {
         const discData: DiscData[] = []  // specify the type
-        const steps = 10 * (upperBound - lowerBound) // Start with 20 discs
-        const dx = (upperBound - lowerBound) / steps
         
-        for(let x = lowerBound; x <= upperBound; x += dx) {
+        const dx = 0.1 // thickness of each disc
+        
+        for (let x = lowerBound; x <= upperBound; x += dx) {
             const radius = evalFn3D(userFn, x)
             discData.push({
                 position: [x, 0, 0] as [number, number, number],
@@ -64,7 +64,7 @@ const DiscAnimation: React.FC<DiscAnimationProps> = ({
                     rotation={disc.rotation as [number, number, number]}
                     args={[disc.radius, disc.radius, disc.height, 32]}
                     material-color="gray"
-                    material-opacity={0.7}
+                    material-opacity={1}
                     material-transparent
                 />
             ))}

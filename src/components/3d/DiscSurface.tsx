@@ -1,5 +1,5 @@
 // src/components/3d/DiscSurface.tsx
-import { LatheGeometry, Vector2 } from 'three'
+import { Vector2 } from 'three'
 import { evaluate } from 'mathjs'
 import * as THREE from 'three';
 
@@ -28,9 +28,9 @@ const DiscSurface = ({ userFn, lowerBound, upperBound, active }: DiscSurfaceProp
     <mesh rotation={[0, 0, Math.PI / 2]}>
       <latheGeometry args={[points]} />
       <meshPhongMaterial 
-        color="gray"
+        color="#E0F2F1"
         transparent={true}
-        opacity={0.5}
+        opacity={0.2}
         side={THREE.DoubleSide}
       />
     </mesh>
