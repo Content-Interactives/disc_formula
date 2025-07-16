@@ -18,6 +18,16 @@ interface DiscData {
     height: number
 }
 
+const phases = [
+    { stepSize: 0.5, speed: 0.1 },    
+    { stepSize: 0.25, speed: 0.2 },     
+    { stepSize: 0.12, speed: 0.4 },    
+    { stepSize: 0.06, speed: 0.8 },
+    { stepSize: 0.03, speed: 1.6 },
+    { stepSize: 0.01, speed: 3.2 }        
+]
+
+
 const DiscAnimation: React.FC<DiscAnimationProps> = ({
     active,
     userFn,
@@ -25,74 +35,85 @@ const DiscAnimation: React.FC<DiscAnimationProps> = ({
     upperBound
 }) => {
     const [visibleDiscs, setVisibleDiscs] = useState(0)
+    const [phase, setPhase] = useState(0)
+    const [isComplete, setIsComplete] = useState(false)
     
-    // Calculate an array of disc positions and sizes
-    const discs = React.useMemo(() => {
-        const arr: DiscData[] = []  // specify the type
-        
-        const dx = 0.1 // thickness of each disc
-
-        // This is a quick check to make sure the smaller bound, is on the left
-        const [a, b] = lowerBound < upperBound 
-        ? [lowerBound, upperBound] 
-        : [upperBound, lowerBound]
-        
-        for (let x = a; x <= b; x += dx) {
-
-            arr.push({
-                position: [x, 0, 0] as [number, number, number],
-                rotation: [0, 0, Math.PI/2] as [number, number, number],
-                radius: evalFn3D(userFn, x),
-                height: dx
-            })
+    // Reset when active changes
+    React.useEffect(() => {
+        if (!active) {
+            setVisibleDiscs(0)
+            setPhase(0)
+            setIsComplete(false)
         }
-        return arr
-    }, [userFn, lowerBound, upperBound]) // This function will run again when the user changes the interactive function
+    }, [active])
+    
+    const discs = React.useMemo(() => {
+        if (!active) return []
+        
+        const arr: DiscData[] = []
+        const stepSize = phases[phase].stepSize
+        
+        try {
+            for (let x = lowerBound; x <= upperBound; x += stepSize) {
+                const baseRadius = Math.abs(evalFn3D(userFn, x))
+                
+                
+                arr.push({
+                    position: [x, 0, 0] as [number, number, number],
+                    rotation: [0, 0, Math.PI/2] as [number, number, number],
+                    radius: baseRadius,
+                    height: stepSize
+                })
+            }
+            return arr
+        } catch (e) { return [] }
+    }, [userFn, lowerBound, upperBound, phase, active])
 
-    // Animation frame this runs 60 times per second
     useFrame(() => {
-        if (active && visibleDiscs < discs.length) {
-            setVisibleDiscs(prev => prev + 0.05)  // Slow animation
-        } else if (!active) {
-            setVisibleDiscs(0)  // Reset when inactive
+        if (!active || isComplete) return
+
+        if (visibleDiscs < discs.length) {
+            setVisibleDiscs(prev => prev + phases[phase].speed)
+        } else if (phase < phases.length - 1) {
+            setVisibleDiscs(0)
+            setPhase(prev => prev + 1)
+        } else {
+            setIsComplete(true)
         }
     })
 
-    if (!active) return null  // Don't render if not active
+    if (!active) return null
 
     return (
         <group>
             {discs.slice(0, Math.floor(visibleDiscs)).map((disc, i) => (
-                <>
+                <React.Fragment key={i}>
                     <Cylinder
-                        key={i}
-                        position={disc.position as [number, number, number]}
-                        rotation={disc.rotation as [number, number, number]}
+                        position={disc.position}
+                        rotation={disc.rotation}
                         args={[disc.radius, disc.radius, disc.height, 32]}
                     >
                         <meshPhysicalMaterial
-                            color="black"           // Change from gray to black
-                            metalness={0.7}        // Keep some metallic quality
-                            roughness={0.4}        // Vinyl-like surface
-                            opacity={1}            // Make it completely solid
-                            transparent={false}    // Remove transparency
+                            color="black"
+                            metalness={0.7}
+                            roughness={0.4}
+                            opacity={1}
+                            transparent={false}
                         />
                     </Cylinder>
 
-                    {/* Add a yellow center label */}
                     <Cylinder
-                        key={`label-${i}`}
-                        position={disc.position as [number, number, number]}
-                        rotation={disc.rotation as [number, number, number]}
+                        position={disc.position}
+                        rotation={disc.rotation}
                         args={[disc.radius * 0.5, disc.radius * 0.5, disc.height * 1.01, 32]}
                     >
                         <meshStandardMaterial
-                            color="#FFD700"        // Yellow gold color
-                            metalness={0}          // Non-metallic
-                            roughness={0.5}        // Paper-like finish
+                            color="#FFD700"
+                            metalness={0}
+                            roughness={0.5}
                         />
                     </Cylinder>
-                </>
+                </React.Fragment>
             ))}
         </group>
     )
