@@ -210,14 +210,6 @@ const DiscMethod: React.FC<DiscMethodProps> = ({
                     ))}
                 </group>
             )}
-            
-            {/* Debug volume display */}
-            {showDiscs && currentVolume > 0 && (
-                <mesh position={[upperBound + 1, 2, 0]}>
-                    <boxGeometry args={[0.1, 0.1, 0.1]} />
-                    <meshBasicMaterial color="white" />
-                </mesh>
-            )}
         </>
     )
 }

@@ -23,11 +23,11 @@ const Scene: React.FC<SceneProps> = ({
                 style={{ background }}
             >
                 {/* Lighting Setup */}
-                <ambientLight intensity={0.8} />
-                <directionalLight position={[10, 10, 5]} intensity={5} />
-                <directionalLight position={[-10, 10, 5]} intensity={3} />
-                <directionalLight position={[0, -10, 5]} intensity={2} />
-                <pointLight position={[0, 0, 10]} intensity={2} />
+                <ambientLight intensity={1.6} />
+                <directionalLight position={[10, 10, 5]} intensity={10} />
+                <directionalLight position={[-10, 10, 5]} intensity={6} />
+                <directionalLight position={[0, -10, 5]} intensity={4} />
+                <pointLight position={[0, 0, 10]} intensity={4} />
                 
                 {/* Coordinate System */}
                 <Axis len={graphSize} color="red" dir={[1, 0, 0]} label="x" />
