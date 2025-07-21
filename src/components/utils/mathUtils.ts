@@ -40,14 +40,22 @@ export const generateFunctionPoints = (
     func: string, 
     a: number, 
     b: number, 
+    numPoints?: number,
     stepSize: number = FUNCTION_STEP_SIZE
 ): [number, number, number][] => {
     const { lower, upper } = getBounds(a, b)
-    const numSteps = Math.floor((upper - lower) / stepSize)
+    
+    // If numPoints is specified, calculate step size from it
+    let actualStepSize = stepSize
+    if (numPoints) {
+        actualStepSize = (upper - lower) / numPoints
+    }
+    
+    const numSteps = Math.floor((upper - lower) / actualStepSize)
     const points: [number, number, number][] = []
     
     for (let i = 0; i <= numSteps; i++) {
-        const x = lower + i * stepSize
+        const x = lower + i * actualStepSize
         const y = evalFn2D(func, x)  // Use 2D evaluation
         points.push([x, y, 0])
     }

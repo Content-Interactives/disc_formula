@@ -1,0 +1,6 @@
+export { default as DiscMethod } from './DiscMethod'
+export { default as DiscSurface } from './components/DiscSurface'
+export { default as DiscBoundaries } from './components/DiscBoundaries'
+export * from './types'
+export * from './config'
+export * from './utils/volumeCalculator' 

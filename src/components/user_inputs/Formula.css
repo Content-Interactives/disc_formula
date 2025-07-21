@@ -72,6 +72,44 @@
     border-radius: 4px;
 }
 
+/* Method selection buttons */
+.method-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.method-btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid;
+    border-radius: 6px;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.method-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+.method-btn.active {
+    color: black;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.description {
+    color: #cccccc;
+    font-size: 0.85rem;
+    margin: 0.5rem 0;
+    font-style: italic;
+}
+
 /* Override KaTeX color */
 :global(.katex) {
     color: white;
