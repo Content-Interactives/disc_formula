@@ -145,10 +145,10 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
                 <group key={`trail-${i}`} rotation={[0, rotation, 0]}>
                     <Line 
                         points={generateFunctionPoints(userFn, minBound, maxBound)}
-                        color="yellow"
+                        color="#9370DB"
                         lineWidth={2}
                         transparent={true}
-                        opacity={0.8}
+                        opacity={0.5}
                     />
                     <ShellBoundaries 
                         userFn={userFn}
@@ -162,7 +162,7 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
             <group ref={groupRef}>
                 <Line 
                     points={generateFunctionPoints(userFn, minBound, maxBound)}
-                    color="yellow"
+                    color="#9370DB"
                     lineWidth={2}
                     transparent={true}
                     opacity={0.8}
@@ -187,35 +187,69 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
                 <group>
                     {shells.slice(0, Math.floor(visibleShells)).map((shell, i) => (
                         <React.Fragment key={i}>
-                            {/* Outer shell wall */}
+                            {/* Outer shell wall - hollow cylinder */}
                             <Cylinder
-                                position={shell.position}
-                                rotation={shell.rotation}
+                                position={[0, shell.height / 2, 0]}
+                                rotation={[0, 0, 0]}
                                 args={[shell.radius + shell.thickness/2, shell.radius + shell.thickness/2, shell.height, 32, 1, true]}
                             >
                                 <meshPhysicalMaterial
-                                    color="black"
+                                    color="#6A4C93"
                                     metalness={0.7}
                                     roughness={0.4}
                                     opacity={0.8}
                                     transparent={true}
+                                    side={2} // DoubleSide
                                 />
                             </Cylinder>
 
-                            {/* Inner shell wall (hollow effect) */}
+                            {/* Inner shell wall - creates the hollow interior */}
                             <Cylinder
-                                position={shell.position}
-                                rotation={shell.rotation}
+                                position={[0, shell.height / 2, 0]}
+                                rotation={[0, 0, 0]}
                                 args={[shell.radius - shell.thickness/2, shell.radius - shell.thickness/2, shell.height, 32, 1, true]}
                             >
-                                <meshStandardMaterial
-                                    color="#FFD700"
-                                    metalness={0}
-                                    roughness={0.5}
+                                <meshPhysicalMaterial
+                                    color="#6A4C93"
+                                    metalness={0.7}
+                                    roughness={0.4}
+                                    opacity={0.8}
                                     transparent={true}
-                                    opacity={0.6}
+                                    side={2} // DoubleSide
                                 />
                             </Cylinder>
+
+                            {/* Top shell ring - horizontal ring at top */}
+                            <mesh 
+                                position={[0, shell.height, 0]}
+                                rotation={[Math.PI/2, 0, 0]}
+                            >
+                                <ringGeometry args={[shell.radius - shell.thickness/2, shell.radius + shell.thickness/2, 32]} />
+                                <meshPhysicalMaterial
+                                    color="#8A6BB1"
+                                    metalness={0.5}
+                                    roughness={0.3}
+                                    opacity={0.9}
+                                    transparent={true}
+                                    side={2} // DoubleSide
+                                />
+                            </mesh>
+
+                            {/* Bottom shell ring - horizontal ring at bottom */}
+                            <mesh 
+                                position={[0, 0, 0]}
+                                rotation={[Math.PI/2, 0, 0]}
+                            >
+                                <ringGeometry args={[shell.radius - shell.thickness/2, shell.radius + shell.thickness/2, 32]} />
+                                <meshPhysicalMaterial
+                                    color="#8A6BB1"
+                                    metalness={0.5}
+                                    roughness={0.3}
+                                    opacity={0.9}
+                                    transparent={true}
+                                    side={2} // DoubleSide
+                                />
+                            </mesh>
                         </React.Fragment>
                     ))}
                 </group>

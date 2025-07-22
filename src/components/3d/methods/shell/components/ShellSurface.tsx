@@ -42,12 +42,13 @@ const ShellSurface: React.FC<ShellSurfaceProps> = ({ userFn, lowerBound, upperBo
     return (
         <mesh>
             <latheGeometry args={[points, 32]} />
-            <meshPhongMaterial 
-                color="#E8F5E8"
+            <meshPhysicalMaterial 
+                color="#9370DB"
                 transparent={true}
                 opacity={0.3}
                 side={THREE.DoubleSide}
-                shininess={100}
+                roughness={0.1}
+                metalness={0.1}
             />
         </mesh>
     )
