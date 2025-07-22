@@ -89,17 +89,19 @@ function App() {
             </div>
 
             {showFormula && (
-                <Formula 
-                    userFunctions={userFunctions}
-                    lowerBound={lowerBound} 
-                    upperBound={upperBound}
-                    setUserFunctions={setUserFunctions}
-                    updateFunction={updateFunction}
-                    setLowerBound={setLowerBound}
-                    setUpperBound={setUpperBound}
-                    selectedMethod={currentMethod}
-                    onMethodChange={handleMethodChange}
-                />
+                <div className={`left-formula-box ${showFormula ? 'open' : ''}`}>
+                    <Formula 
+                        userFunctions={userFunctions}
+                        lowerBound={lowerBound} 
+                        upperBound={upperBound}
+                        setUserFunctions={setUserFunctions}
+                        updateFunction={updateFunction}
+                        setLowerBound={setLowerBound}
+                        setUpperBound={setUpperBound}
+                        selectedMethod={currentMethod}
+                        onMethodChange={handleMethodChange}
+                    />
+                </div>
             )}
 
             <Plot3D 

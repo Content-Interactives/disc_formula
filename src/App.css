@@ -17,7 +17,7 @@ html,
     background: #ff9800;
     color: white;
     display: flex;
-    flex-direction: row; /* Changed to row for horizontal layout */
+    flex-direction: row; /* Desktop: horizontal layout */
     align-items: center;
     justify-content: center;
     padding: 10px 20px;
@@ -25,7 +25,27 @@ html,
     font-weight: bold;
     z-index: 1000;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    gap: 1rem; /* Add gap between buttons */
+    gap: 1rem;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+/* Mobile responsiveness for top bar */
+@media (max-width: 768px) {
+    .top-formula-bar {
+        flex-direction: column;
+        min-height: auto;
+        padding: 15px 10px;
+        gap: 0.75rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-formula-bar {
+        padding: 10px 8px;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+    }
 }
 
 .open-tab-btn {
@@ -38,6 +58,17 @@ html,
     font-size: 1em;
     font-weight: bold;
     transition: background 0.2s;
+    min-height: 44px; /* Touch-friendly minimum */
+    min-width: 44px;
+}
+
+/* Touch-friendly buttons on mobile */
+@media (max-width: 768px) {
+    .open-tab-btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+        min-width: 120px;
+    }
 }
 
 .open-tab-btn:hover {
@@ -55,6 +86,15 @@ html,
     font-weight: bold;
     transition: background 0.2s;
     min-width: 140px;
+    min-height: 44px; /* Touch-friendly */
+}
+
+@media (max-width: 768px) {
+    .method-selector {
+        padding: 12px 16px;
+        min-width: 160px;
+        font-size: 1rem;
+    }
 }
 
 .method-selector:hover {
@@ -80,12 +120,33 @@ html,
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+@media (max-width: 768px) {
+    .bottom-tab {
+        height: auto;
+        max-height: 40vh;
+        padding: 15px;
+        overflow-y: auto;
+    }
+}
+
 .plot-area {
     position: relative;
     width: 100vw;
     height: 100vh;
     z-index: 1;
     padding-top: 80px;
+}
+
+@media (max-width: 768px) {
+    .plot-area {
+        padding-top: 120px; /* More space for stacked mobile nav */
+    }
+}
+
+@media (max-width: 480px) {
+    .plot-area {
+        padding-top: 140px;
+    }
 }
 
 .top-right-btn {
@@ -101,6 +162,16 @@ html,
     z-index: 100;
     font-size: 1em;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    min-height: 44px; /* Touch-friendly */
+}
+
+@media (max-width: 768px) {
+    .top-right-btn {
+        top: 10px;
+        right: 10px;
+        padding: 15px 25px;
+        font-size: 1rem;
+    }
 }
 
 .left-formula-box {
@@ -116,4 +187,70 @@ html,
     box-shadow: 2px 0 12px rgba(0, 0, 0, 0.5);
     overflow-y: auto;
     border-right: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease; /* Smooth slide animation */
+}
+
+/* Mobile: Make formula box slide in from left */
+@media (max-width: 768px) {
+    .left-formula-box {
+        width: 100vw;
+        max-width: 400px;
+        transform: translateX(-100%);
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.7);
+        padding: 15px;
+    }
+    
+    .left-formula-box.open {
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .left-formula-box {
+        width: 100vw;
+        max-width: none;
+        padding: 10px;
+    }
+}
+
+/* Volume tracker positioning for mobile */
+.volume-tracker {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    max-width: 350px;
+    z-index: 999;
+}
+
+@media (max-width: 768px) {
+    .volume-tracker {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .volume-tracker {
+        bottom: 5px;
+        right: 5px;
+        left: 5px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Touch improvements */
+@media (hover: none) and (pointer: coarse) {
+    button {
+        min-height: 48px;
+        min-width: 48px;
+        padding: 12px 24px;
+    }
+    
+    .method-selector {
+        min-height: 48px;
+        padding: 12px 16px;
+    }
 }

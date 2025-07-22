@@ -11,6 +11,10 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    
+    /* Mobile Safari improvements */
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
 }
 
 a {
@@ -28,11 +32,33 @@ body {
     place-items: center;
     min-width: 320px;
     min-height: 100vh;
+    
+    /* Prevent zoom on input focus (iOS Safari) */
+    font-size: 16px;
+}
+
+/* Mobile responsive font sizing */
+@media (max-width: 768px) {
+    body {
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
 }
 
 h1 {
     font-size: 3.2em;
     line-height: 1.1;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5em;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2em;
+    }
 }
 
 button {
@@ -45,15 +71,61 @@ button {
     background-color: #1a1a1a;
     cursor: pointer;
     transition: border-color 0.25s;
+    
+    /* Touch improvements */
+    min-height: 44px;
+    min-width: 44px;
+    -webkit-tap-highlight-color: transparent;
 }
+
+/* Enhanced touch targets for mobile */
+@media (max-width: 768px) {
+    button {
+        min-height: 48px;
+        min-width: 48px;
+        padding: 0.75em 1.5em;
+        font-size: 1rem;
+    }
+}
+
 button:hover {
     border-color: #646cff;
 }
+
+/* Remove hover effects on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    button:hover {
+        border-color: #646cff;
+    }
+}
+
 button:focus,
 button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Better focus indicators for mobile */
+@media (max-width: 768px) {
+    button:focus,
+    button:focus-visible {
+        outline: 2px solid #646cff;
+        outline-offset: 2px;
+    }
+}
+
+/* Disable text selection on UI elements */
+button, .method-selector, .open-tab-btn {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+/* Smooth scrolling for mobile */
+* {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Light mode adjustments */
 @media (prefers-color-scheme: light) {
     :root {
         color: #213547;
@@ -63,6 +135,33 @@ button:focus-visible {
         color: #747bff;
     }
     button {
-        background-color: #df1313;
+        background-color: #f9f9f9;
+        color: #213547;
+    }
+}
+
+/* Mobile Safari viewport fixes */
+@supports (-webkit-touch-callout: none) {
+    body {
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* Prevent horizontal scroll on mobile */
+html, body {
+    overflow-x: hidden;
+}
+
+/* Better mobile input styling */
+input, select, textarea {
+    font-size: 16px; /* Prevent zoom on iOS */
+    -webkit-appearance: none;
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    input, select, textarea {
+        font-size: 16px;
+        padding: 12px;
     }
 }
