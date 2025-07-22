@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Plot3D from "./components/3d/Plot3D"
 import Formula from "./components/user_inputs/Formula"
-import { useMethodConfig } from "./components/3d/hooks/useMethodConfig"
+import { useMethodConfig, useMethodSequence } from "./components/3d/hooks"
 
 function App() {
     const [showFormula, displayFormula] = useState(false)
@@ -11,12 +11,22 @@ function App() {
     const [lowerBound, setLowerBound] = useState(0)  // Changed to 0 for better visualization
     const [upperBound, setUpperBound] = useState(2)  // Changed to 2 for better visualization
     
-    // Animation state
-    const [rotationBtn, toggleRotate] = useState(false)
-    const [discBtn, toggleDisc] = useState(false)
-    
     // Method selection using the new hook
     const { currentMethod, setMethod, availableMethods, methodConfig } = useMethodConfig('disc')
+    
+    // NEW: Sequence management - controls Show Volume → Show Discs flow
+    const {
+        isRotating,
+        showElements,
+        onRotationComplete,
+        resetSequence,
+        getButtonStates
+    } = useMethodSequence(currentMethod)
+
+    // Reset sequence when method changes
+    useEffect(() => {
+        resetSequence()
+    }, [currentMethod, resetSequence])
 
     // Helper function to update specific function in array
     const updateFunction = (index: number, value: string) => {
@@ -56,6 +66,9 @@ function App() {
         setTimeout(() => ensureFunctionCount(), 0)
     }
 
+    // Get button configurations from sequence hook
+    const { volumeButton, elementsButton } = getButtonStates()
+
     return (
         <>
             <div className="top-formula-bar"> 
@@ -76,15 +89,26 @@ function App() {
                     ))}
                 </select>
                 
-                <button onClick={() => toggleRotate(!rotationBtn)}>
-                    {rotationBtn ? "Stop" : "Start"} Rotation
+                {/* Show Volume Button */}
+                <button 
+                    onClick={volumeButton.onClick}
+                    disabled={volumeButton.disabled}
+                >
+                    {volumeButton.text}
                 </button>
 
+                {/* Show Elements Button (Discs/Washers/Shells) */}
                 <button 
-                    onClick={() => toggleDisc(!discBtn)}
-                    disabled={discBtn === false && rotationBtn === true}
+                    onClick={elementsButton.onClick}
+                    disabled={elementsButton.disabled}
+                    title={elementsButton.tooltip}
+                    style={{ 
+                        opacity: elementsButton.disabled ? 0.5 : 1,
+                        cursor: elementsButton.disabled ? 'not-allowed' : 'pointer',
+                        backgroundColor: elementsButton.disabled ? '#666' : 'transparent'
+                    }}
                 >
-                    {discBtn ? "Hide" : "Show"} {currentMethod === 'disc' ? 'Discs' : currentMethod === 'washer' ? 'Washers' : 'Shells'}
+                    {elementsButton.text}
                 </button>
             </div>
 
@@ -109,9 +133,10 @@ function App() {
                 userFunctions={userFunctions}
                 lowerBound={lowerBound}
                 upperBound={upperBound}
-                rotationBtn={rotationBtn}
-                toggleRotate={toggleRotate}
-                discBtn={discBtn}
+                rotationBtn={isRotating}
+                toggleRotate={() => {}} // Not needed anymore
+                discBtn={showElements}
+                onRotationComplete={onRotationComplete} // CRITICAL: Pass completion callback
             />
         </>
     )

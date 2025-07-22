@@ -11,7 +11,9 @@ interface Plot3DProps {
     graphSize?: number
     rotationBtn: boolean
     discBtn: boolean
+    volumeTrackerBtn?: boolean
     toggleRotate: (value: boolean) => void
+    onRotationComplete?: () => void  // NEW: Add completion callback
 }
 
 const Plot3D: React.FC<Plot3DProps> = ({ 
@@ -22,7 +24,9 @@ const Plot3D: React.FC<Plot3DProps> = ({
     graphSize = 100,
     rotationBtn = false,
     discBtn = false,
+    volumeTrackerBtn = false,
     toggleRotate,
+    onRotationComplete,  // NEW: Accept completion callback
 }) => {
     return (
         <Scene graphSize={graphSize}>
@@ -33,7 +37,7 @@ const Plot3D: React.FC<Plot3DProps> = ({
                 upperBound={upperBound}
                 isRotating={rotationBtn}
                 showElements={discBtn}
-                onRotationComplete={() => toggleRotate(false)}
+                onRotationComplete={onRotationComplete || (() => {})}  // NEW: Pass callback with fallback
             />
         </Scene>
     )

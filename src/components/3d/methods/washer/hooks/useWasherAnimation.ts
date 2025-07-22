@@ -20,6 +20,10 @@ export const useWasherAnimation = ({
     upperBound,
     showWashers
 }: UseWasherAnimationProps) => {
+    // Ensure proper bounds order (swap if needed)
+    const minBound = Math.min(lowerBound, upperBound)
+    const maxBound = Math.max(lowerBound, upperBound)
+    
     const [visibleWashers, setVisibleWashers] = useState(0)
     const [phase, setPhase] = useState(0)
     const [isComplete, setIsComplete] = useState(false)
@@ -43,7 +47,7 @@ export const useWasherAnimation = ({
         const stepSize = WASHER_PHASES[phase]?.stepSize || 0.1
         
         try {
-            for (let x = lowerBound; x <= upperBound; x += stepSize) {
+            for (let x = minBound; x <= maxBound; x += stepSize) {
                 const func1Value = Math.abs(evalFn3D(outerFn, x))
                 const func2Value = Math.abs(evalFn3D(innerFn, x))
                 
@@ -64,7 +68,7 @@ export const useWasherAnimation = ({
         } catch (e) { 
             return [] 
         }
-    }, [outerFn, innerFn, lowerBound, upperBound, phase, showWashers])
+    }, [outerFn, innerFn, minBound, maxBound, phase, showWashers])
 
     // Animation frame logic
     useFrame(() => {
@@ -74,8 +78,8 @@ export const useWasherAnimation = ({
             try {
                 // Calculate current volume using washer formula
                 if (washers.length > 0) {
-                    const currentX = lowerBound + ((upperBound - lowerBound) * visibleWashers) / washers.length
-                    setCurrentVolume(calculatePartialWasherVolume(outerFn, innerFn, lowerBound, currentX, currentPhase.stepSize))
+                    const currentX = minBound + ((maxBound - minBound) * visibleWashers) / washers.length
+                    setCurrentVolume(calculatePartialWasherVolume(outerFn, innerFn, minBound, currentX, currentPhase.stepSize))
                 }
             } catch (e) {
                 // Handle function evaluation errors

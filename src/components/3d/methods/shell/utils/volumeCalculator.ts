@@ -6,10 +6,14 @@ export const calculateShellVolume = (
     upperBound: number,
     stepSize: number = 0.01
 ): number => {
+    // Ensure proper bounds order
+    const minBound = Math.min(lowerBound, upperBound)
+    const maxBound = Math.max(lowerBound, upperBound)
+    
     let volume = 0
     
     try {
-        for (let x = lowerBound; x <= upperBound; x += stepSize) {
+        for (let x = minBound; x <= maxBound; x += stepSize) {
             const y = evaluate(userFn, { x }) as number
             
             // Shell method: V = 2π ∫[a to b] x·f(x) dx
@@ -30,10 +34,14 @@ export const calculatePartialShellVolume = (
     currentX: number,
     stepSize: number = 0.01
 ): number => {
+    // Ensure proper bounds order
+    const minBound = Math.min(lowerBound, currentX)
+    const maxBound = Math.max(lowerBound, currentX)
+    
     let volume = 0
     
     try {
-        for (let x = lowerBound; x <= currentX; x += stepSize) {
+        for (let x = minBound; x <= maxBound; x += stepSize) {
             const y = evaluate(userFn, { x }) as number
             
             // Shell method: V = 2π ∫[a to b] x·f(x) dx

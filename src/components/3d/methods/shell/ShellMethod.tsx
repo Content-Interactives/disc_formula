@@ -17,6 +17,10 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
     showShells,
     onRotationComplete
 }) => {
+    // Ensure proper bounds order (swap if needed)
+    const minBound = Math.min(lowerBound, upperBound)
+    const maxBound = Math.max(lowerBound, upperBound)
+    
     const [showSurface, setShowSurface] = useState(false)
     const [trailRotations, setTrailRotations] = useState<number[]>([])
     
@@ -81,7 +85,7 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
             const shells: ShellData[] = []
             
             try {
-                for (let x = lowerBound; x <= upperBound; x += currentPhase.stepSize) {
+                for (let x = minBound; x <= maxBound; x += currentPhase.stepSize) {
                     const height = Math.abs(evalFn3D(userFn, x))
                     shells.push({
                         position: [0, height / 2, 0] as [number, number, number],
@@ -94,8 +98,8 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
                 
                 // Calculate current volume
                 if (shells.length > 0) {
-                    const currentX = lowerBound + ((upperBound - lowerBound) * visibleShells) / shells.length
-                    setCurrentVolume(calculatePartialShellVolume(userFn, lowerBound, currentX, currentPhase.stepSize))
+                    const currentX = minBound + ((maxBound - minBound) * visibleShells) / shells.length
+                    setCurrentVolume(calculatePartialShellVolume(userFn, minBound, currentX, currentPhase.stepSize))
                 }
             } catch (e) {
                 // Handle function evaluation errors
@@ -120,7 +124,7 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
         const stepSize = SHELL_PHASES[phase]?.stepSize || 0.1
         
         try {
-            for (let x = lowerBound; x <= upperBound; x += stepSize) {
+            for (let x = minBound; x <= maxBound; x += stepSize) {
                 const height = Math.abs(evalFn3D(userFn, x))
                 arr.push({
                     position: [0, height / 2, 0] as [number, number, number],
@@ -132,7 +136,7 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
             }
             return arr
         } catch (e) { return [] }
-    }, [userFn, lowerBound, upperBound, phase, showShells])
+    }, [userFn, minBound, maxBound, phase, showShells])
 
     return (
         <>
@@ -140,7 +144,7 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
             {trailRotations.map((rotation, i) => (
                 <group key={`trail-${i}`} rotation={[0, rotation, 0]}>
                     <Line 
-                        points={generateFunctionPoints(userFn, lowerBound, upperBound)}
+                        points={generateFunctionPoints(userFn, minBound, maxBound)}
                         color="yellow"
                         lineWidth={2}
                         transparent={true}
@@ -148,8 +152,8 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
                     />
                     <ShellBoundaries 
                         userFn={userFn}
-                        lowerBound={lowerBound}
-                        upperBound={upperBound}
+                        lowerBound={minBound}
+                        upperBound={maxBound}
                     />
                 </group>
             ))}
@@ -157,7 +161,7 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
             {/* Current rotating function */}
             <group ref={groupRef}>
                 <Line 
-                    points={generateFunctionPoints(userFn, lowerBound, upperBound)}
+                    points={generateFunctionPoints(userFn, minBound, maxBound)}
                     color="yellow"
                     lineWidth={2}
                     transparent={true}
@@ -165,16 +169,16 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
                 />
                 <ShellBoundaries 
                     userFn={userFn}
-                    lowerBound={lowerBound}
-                    upperBound={upperBound}
+                    lowerBound={minBound}
+                    upperBound={maxBound}
                 />
             </group>
 
             {/* Specialized Shell Surface */}
             <ShellSurface
                 userFn={userFn}
-                lowerBound={lowerBound}
-                upperBound={upperBound}
+                lowerBound={minBound}
+                upperBound={maxBound}
                 active={showSurface}
             />
 

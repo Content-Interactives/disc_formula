@@ -7,10 +7,14 @@ export const calculateWasherVolume = (
     upperBound: number,
     stepSize: number = 0.01
 ): number => {
+    // Ensure proper bounds order
+    const minBound = Math.min(lowerBound, upperBound)
+    const maxBound = Math.max(lowerBound, upperBound)
+    
     let volume = 0
     
     try {
-        for (let x = lowerBound; x <= upperBound; x += stepSize) {
+        for (let x = minBound; x <= maxBound; x += stepSize) {
             const outerY = evaluate(outerFn, { x }) as number
             const innerY = evaluate(innerFn, { x }) as number
             
@@ -38,10 +42,14 @@ export const calculatePartialWasherVolume = (
     currentX: number,
     stepSize: number = 0.01
 ): number => {
+    // Ensure proper bounds order
+    const minBound = Math.min(lowerBound, currentX)
+    const maxBound = Math.max(lowerBound, currentX)
+    
     let volume = 0
     
     try {
-        for (let x = lowerBound; x <= currentX; x += stepSize) {
+        for (let x = minBound; x <= maxBound; x += stepSize) {
             const outerY = evaluate(outerFn, { x }) as number
             const innerY = evaluate(innerFn, { x }) as number
             

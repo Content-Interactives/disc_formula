@@ -17,6 +17,10 @@ const DiscMethod: React.FC<DiscMethodProps> = ({
     showDiscs,
     onRotationComplete
 }) => {
+    // Ensure proper bounds order (swap if needed)
+    const minBound = Math.min(lowerBound, upperBound)
+    const maxBound = Math.max(lowerBound, upperBound)
+    
     const [showSurface, setShowSurface] = useState(false)
     const [trailRotations, setTrailRotations] = useState<number[]>([])
     
@@ -81,7 +85,7 @@ const DiscMethod: React.FC<DiscMethodProps> = ({
             const discs: DiscData[] = []
             
             try {
-                for (let x = lowerBound; x <= upperBound; x += currentPhase.stepSize) {
+                for (let x = minBound; x <= maxBound; x += currentPhase.stepSize) {
                     const baseRadius = Math.abs(evalFn3D(userFn, x))
                     discs.push({
                         position: [x, 0, 0] as [number, number, number],
@@ -93,8 +97,8 @@ const DiscMethod: React.FC<DiscMethodProps> = ({
                 
                 // Calculate current volume
                 if (discs.length > 0) {
-                    const currentX = lowerBound + ((upperBound - lowerBound) * visibleDiscs) / discs.length
-                    setCurrentVolume(calculatePartialDiscVolume(userFn, lowerBound, currentX, currentPhase.stepSize))
+                    const currentX = minBound + ((maxBound - minBound) * visibleDiscs) / discs.length
+                    setCurrentVolume(calculatePartialDiscVolume(userFn, minBound, currentX, currentPhase.stepSize))
                 }
             } catch (e) {
                 // Handle function evaluation errors
@@ -119,7 +123,7 @@ const DiscMethod: React.FC<DiscMethodProps> = ({
         const stepSize = DISC_PHASES[phase]?.stepSize || 0.1
         
         try {
-            for (let x = lowerBound; x <= upperBound; x += stepSize) {
+            for (let x = minBound; x <= maxBound; x += stepSize) {
                 const baseRadius = Math.abs(evalFn3D(userFn, x))
                 arr.push({
                     position: [x, 0, 0] as [number, number, number],
@@ -130,7 +134,7 @@ const DiscMethod: React.FC<DiscMethodProps> = ({
             }
             return arr
         } catch (e) { return [] }
-    }, [userFn, lowerBound, upperBound, phase, showDiscs])
+    }, [userFn, minBound, maxBound, phase, showDiscs])
 
     return (
         <>
@@ -138,7 +142,7 @@ const DiscMethod: React.FC<DiscMethodProps> = ({
             {trailRotations.map((rotation, i) => (
                 <group key={`trail-${i}`} rotation={[rotation, 0, 0]}>
                     <Line 
-                        points={generateFunctionPoints(userFn, lowerBound, upperBound)}
+                        points={generateFunctionPoints(userFn, minBound, maxBound)}
                         color="yellow"
                         lineWidth={2}
                         transparent={true}
@@ -146,8 +150,8 @@ const DiscMethod: React.FC<DiscMethodProps> = ({
                     />
                     <DiscBoundaries 
                         userFn={userFn}
-                        lowerBound={lowerBound}
-                        upperBound={upperBound}
+                        lowerBound={minBound}
+                        upperBound={maxBound}
                     />
                 </group>
             ))}
@@ -155,7 +159,7 @@ const DiscMethod: React.FC<DiscMethodProps> = ({
             {/* Current rotating function */}
             <group ref={groupRef}>
                 <Line 
-                    points={generateFunctionPoints(userFn, lowerBound, upperBound)}
+                    points={generateFunctionPoints(userFn, minBound, maxBound)}
                     color="yellow"
                     lineWidth={2}
                     transparent={true}
@@ -163,16 +167,16 @@ const DiscMethod: React.FC<DiscMethodProps> = ({
                 />
                 <DiscBoundaries 
                     userFn={userFn}
-                    lowerBound={lowerBound}
-                    upperBound={upperBound}
+                    lowerBound={minBound}
+                    upperBound={maxBound}
                 />
             </group>
 
             {/* Specialized Disc Surface */}
             <DiscSurface
                 userFn={userFn}
-                lowerBound={lowerBound}
-                upperBound={upperBound}
+                lowerBound={minBound}
+                upperBound={maxBound}
                 active={showSurface}
             />
 
