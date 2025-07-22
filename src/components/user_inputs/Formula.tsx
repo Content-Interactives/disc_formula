@@ -91,7 +91,6 @@ const Formula: React.FC<FormulaProps> = ({
 
                 <div className="formula-section">
                     <h2 className="title">{methodConfig.name}</h2>
-                    <p className="description">{methodConfig.description}</p>
 
                     {/* Dynamic formula based on selected method */}
                                             <div className="formula-display">

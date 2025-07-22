@@ -219,21 +219,6 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.description {
-    color: #cccccc;
-    font-size: 0.85rem;
-    margin: 0.5rem 0;
-    font-style: italic;
-}
-
-@media (max-width: 768px) {
-    .description {
-        font-size: 0.95rem;
-        text-align: center;
-        margin: 0.75rem 0;
-    }
-}
-
 /* Override KaTeX color */
 :global(.katex) {
     color: white;
