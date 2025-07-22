@@ -59,8 +59,8 @@ const Formula: React.FC<FormulaProps> = ({
         } else if (selectedMethod === 'washer') {
             const outerFunc = escapeForKaTeX(userFunctions[0] || '2x')
             const innerFunc = escapeForKaTeX(userFunctions[1] || 'x')
-            formula = formula.replace('{FUNCTION_1}', `\\color{#FF6B6B}{${outerFunc}}`)  // Outer function in red
-            formula = formula.replace('{FUNCTION_2}', `\\color{#4ECDC4}{${innerFunc}}`)  // Inner function in teal
+            formula = formula.replace('{FUNCTION_1}', `{\\color{#FF6B6B}{${outerFunc}}}`)  // Outer function in red, contained
+            formula = formula.replace('{FUNCTION_2}', `{\\color{#4ECDC4}{${innerFunc}}}`)  // Inner function in teal, contained
         } else if (selectedMethod === 'shell') {
             const func = escapeForKaTeX(userFunctions[0] || 'x')
             formula = formula.replace('{FUNCTION_1}', `\\color{${COLORS.function}}{${func}}`)
@@ -133,8 +133,8 @@ const Formula: React.FC<FormulaProps> = ({
                         const isInnerFunction = selectedMethod === 'washer' && index === 1
                         
                         const labelColor = isOuterFunction ? '#FF6B6B' : 
-                                         isInnerFunction ? '#4ECDC4' : 
-                                         COLORS.function
+                            isInnerFunction ? '#4ECDC4' : 
+                            COLORS.function
 
                         return (
                             <div key={index} className="input-field">

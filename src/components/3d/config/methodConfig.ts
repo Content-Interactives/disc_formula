@@ -22,7 +22,7 @@ export const METHOD_CONFIGS: Record<MethodType, MethodConfig> = {
     },
     washer: {
         name: "Washer Method", 
-        formula: "V = \\pi\\int_{{LOWER_BOUND}}^{{UPPER_BOUND}}[{FUNCTION_1}]^2 - [{FUNCTION_2}]^2\\,dx",
+        formula: "V = \\pi\\int_{{LOWER_BOUND}}^{{UPPER_BOUND}}\\left[{FUNCTION_1}\\right]^2 - \\left[{FUNCTION_2}\\right]^2\\,dx",
         description: "Rotating around x-axis with hollow discs (outer - inner)",
         color: "#FF7F50",
         functionCount: 2,
