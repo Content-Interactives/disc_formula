@@ -31,7 +31,7 @@ export const METHOD_CONFIGS: Record<MethodType, MethodConfig> = {
     },
     shell: {
         name: "Shell Method",
-        formula: "V = 2\\pi\\int_{{LOWER_BOUND}}^{{UPPER_BOUND}}x \\cdot {FUNCTION_1}\\,dx", 
+        formula: "V = 2\\pi\\int_{{LOWER_BOUND}}^{{UPPER_BOUND}}x \\cdot \\left[{FUNCTION_1}\\right]\\,dx", 
         description: "Rotating around y-axis using cylindrical shells",
         color: "#9370DB",
         functionCount: 1,

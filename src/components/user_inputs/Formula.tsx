@@ -55,7 +55,7 @@ const Formula: React.FC<FormulaProps> = ({
         // Replace functions based on method
         if (selectedMethod === 'disc') {
             const func = escapeForKaTeX(userFunctions[0] || 'x')
-            formula = formula.replace('{FUNCTION_1}', `\\color{${COLORS.function}}{${func}}`)
+            formula = formula.replace('{FUNCTION_1}', `{\\color{${COLORS.function}}{${func}}}`)  // Contained color
         } else if (selectedMethod === 'washer') {
             const outerFunc = escapeForKaTeX(userFunctions[0] || '2x')
             const innerFunc = escapeForKaTeX(userFunctions[1] || 'x')
@@ -63,7 +63,7 @@ const Formula: React.FC<FormulaProps> = ({
             formula = formula.replace('{FUNCTION_2}', `{\\color{#4ECDC4}{${innerFunc}}}`)  // Inner function in teal, contained
         } else if (selectedMethod === 'shell') {
             const func = escapeForKaTeX(userFunctions[0] || 'x')
-            formula = formula.replace('{FUNCTION_1}', `\\color{${COLORS.function}}{${func}}`)
+            formula = formula.replace('{FUNCTION_1}', `{\\color{${COLORS.function}}{${func}}}`)  // Contained color
         }
         
         // Debug log to see the final formula
@@ -110,8 +110,9 @@ const Formula: React.FC<FormulaProps> = ({
                     <div className="input-field">
                         <label style={{ color: COLORS.upperBound }}>(b)</label>
                         <NumericFormat
-                            value={upperBound}
-                            onValueChange={({ floatValue }) => setUpperBound(floatValue ?? 0)}
+                            value={upperBound === 2 ? '' : upperBound}
+                            placeholder="2"
+                            onValueChange={({ floatValue }) => setUpperBound(floatValue ?? 2)}
                             allowNegative={true}
                             className="input"
                         />
@@ -120,7 +121,8 @@ const Formula: React.FC<FormulaProps> = ({
                     <div className="input-field">
                         <label style={{ color: COLORS.lowerBound }}>(a)</label>
                         <NumericFormat
-                            value={lowerBound}
+                            value={lowerBound === 0 ? '' : lowerBound}
+                            placeholder="0"
                             onValueChange={({ floatValue }) => setLowerBound(floatValue ?? 0)}
                             allowNegative={true}
                             className="input"
