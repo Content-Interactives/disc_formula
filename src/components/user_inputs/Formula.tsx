@@ -102,27 +102,29 @@ const Formula: React.FC<FormulaProps> = ({
                 
                 {/* Dynamic inputs based on method */}
                 <div className="inputs">
-                    {/* Bounds inputs */}
-                    <div className="input-field">
-                        <label style={{ color: COLORS.upperBound }}>(b)</label>
-                        <NumericFormat
-                            value={upperBound === 2 ? '' : upperBound}
-                            placeholder="2"
-                            onValueChange={({ floatValue }) => setUpperBound(floatValue ?? 2)}
-                            allowNegative={true}
-                            className="input"
-                        />
-                    </div>
+                    {/* Bounds inputs - shared row */}
+                    <div className="bounds-row">
+                        <div className="input-field">
+                            <label style={{ color: COLORS.lowerBound }}>(a)</label>
+                            <NumericFormat
+                                value={lowerBound === 0 ? '' : lowerBound}
+                                placeholder="0"
+                                onValueChange={({ floatValue }) => setLowerBound(floatValue ?? 0)}
+                                allowNegative={true}
+                                className="input"
+                            />
+                        </div>
 
-                    <div className="input-field">
-                        <label style={{ color: COLORS.lowerBound }}>(a)</label>
-                        <NumericFormat
-                            value={lowerBound === 0 ? '' : lowerBound}
-                            placeholder="0"
-                            onValueChange={({ floatValue }) => setLowerBound(floatValue ?? 0)}
-                            allowNegative={true}
-                            className="input"
-                        />
+                        <div className="input-field">
+                            <label style={{ color: COLORS.upperBound }}>(b)</label>
+                            <NumericFormat
+                                value={upperBound === 2 ? '' : upperBound}
+                                placeholder="2"
+                                onValueChange={({ floatValue }) => setUpperBound(floatValue ?? 2)}
+                                allowNegative={true}
+                                className="input"
+                            />
+                        </div>
                     </div>
 
                     {/* Dynamic function inputs based on method */}
