@@ -3,7 +3,7 @@
     "private": true,
     "version": "0.0.0",
     "type": "module",
-    "homepage": "https://maxmeybergck12.github.io/disc_formula",
+    "homepage": "https://content-interactives.github.io/disc_formula",
     "scripts": {
         "dev": "vite",
         "build": "tsc -b && vite build",
