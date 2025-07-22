@@ -150,6 +150,12 @@
     min-height: 44px; /* Touch-friendly */
 }
 
+.input::placeholder {
+    color: #666;
+    opacity: 0.7;
+    font-style: italic;
+}
+
 @media (max-width: 768px) {
     .input {
         padding: 0.75rem;

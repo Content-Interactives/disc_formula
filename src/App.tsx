@@ -7,7 +7,7 @@ function App() {
     const [showFormula, displayFormula] = useState(false)
     
     // Function and bounds state - now supporting multiple functions
-    const [userFunctions, setUserFunctions] = useState(["2*x"])  // Array of functions
+    const [userFunctions, setUserFunctions] = useState(["2x"])  // Array of functions
     const [lowerBound, setLowerBound] = useState(0)  // Changed to 0 for better visualization
     const [upperBound, setUpperBound] = useState(2)  // Changed to 2 for better visualization
     
@@ -47,7 +47,7 @@ function App() {
             for (let i = current; i < needed; i++) {
                 if (currentMethod === 'washer') {
                     // For washer method: outer function should be larger than inner
-                    newFunctions.push(i === 0 ? "2*x" : "x")
+                    newFunctions.push(i === 0 ? "2x" : "x")
                 } else {
                     newFunctions.push("x")  // Default function for disc/shell
                 }

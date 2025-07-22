@@ -52,22 +52,19 @@ const Formula: React.FC<FormulaProps> = ({
         formula = formula.replace('{LOWER_BOUND}', `\\color{${COLORS.lowerBound}}{${lowerBound}}`)
         formula = formula.replace('{UPPER_BOUND}', `\\color{${COLORS.upperBound}}{${upperBound}}`)
         
-        // Replace functions based on method
+        // Replace functions based on method with consistent defaults
         if (selectedMethod === 'disc') {
             const func = escapeForKaTeX(userFunctions[0] || 'x')
-            formula = formula.replace('{FUNCTION_1}', `{\\color{${COLORS.function}}{${func}}}`)  // Contained color
+            formula = formula.replace('{FUNCTION_1}', `{\\color{${COLORS.function}}{${func}}}`)
         } else if (selectedMethod === 'washer') {
-            const outerFunc = escapeForKaTeX(userFunctions[0] || '2x')
-            const innerFunc = escapeForKaTeX(userFunctions[1] || 'x')
-            formula = formula.replace('{FUNCTION_1}', `{\\color{#FF6B6B}{${outerFunc}}}`)  // Outer function in red, contained
-            formula = formula.replace('{FUNCTION_2}', `{\\color{#4ECDC4}{${innerFunc}}}`)  // Inner function in teal, contained
+            const outerFunc = escapeForKaTeX(userFunctions[0] || '2x')  // R(x) default: 2x
+            const innerFunc = escapeForKaTeX(userFunctions[1] || 'x')    // r(x) default: x
+            formula = formula.replace('{FUNCTION_1}', `{\\color{#FF6B6B}{${outerFunc}}}`)
+            formula = formula.replace('{FUNCTION_2}', `{\\color{#4ECDC4}{${innerFunc}}}`)
         } else if (selectedMethod === 'shell') {
             const func = escapeForKaTeX(userFunctions[0] || 'x')
-            formula = formula.replace('{FUNCTION_1}', `{\\color{${COLORS.function}}{${func}}}`)  // Contained color
+            formula = formula.replace('{FUNCTION_1}', `{\\color{${COLORS.function}}{${func}}}`)
         }
-        
-        // Debug log to see the final formula
-        console.log('Final formula for', selectedMethod, ':', formula)
         
         return formula
     }
@@ -138,6 +135,25 @@ const Formula: React.FC<FormulaProps> = ({
                             isInnerFunction ? '#4ECDC4' : 
                             COLORS.function
 
+                        // Get the appropriate default value for this method/function
+                        let defaultValue = "x"
+                        if (selectedMethod === 'washer') {
+                            defaultValue = index === 0 ? "2x" : "x"  // R(x) outer, r(x) inner
+                        } else if (selectedMethod === 'disc' || selectedMethod === 'shell') {
+                            defaultValue = "x"  // f(x) for both
+                        }
+
+                        const currentValue = userFunctions[index] || ''
+                        
+                        // Check if we should show placeholder - more flexible logic
+                        let shouldShowPlaceholder = false
+                        if (currentValue === '' || currentValue === defaultValue) {
+                            shouldShowPlaceholder = true
+                        } else if (selectedMethod === 'disc' || selectedMethod === 'shell') {
+                            // For disc/shell, also show placeholder for common defaults like "2x", "x", etc.
+                            shouldShowPlaceholder = ['x', '2x', '2*x'].includes(currentValue)
+                        }
+
                         return (
                             <div key={index} className="input-field">
                                 <label style={{ color: labelColor }}>
@@ -145,10 +161,10 @@ const Formula: React.FC<FormulaProps> = ({
                                 </label>
                                 <input
                                     type="text"
-                                    value={userFunctions[index] || ''}
+                                    value={shouldShowPlaceholder ? '' : currentValue}
+                                    placeholder={defaultValue}
                                     onChange={(e) => updateFunction(index, e.target.value)}
                                     className="input"
-                                    placeholder={`Enter ${label.toLowerCase()}`}
                                 />
                             </div>
                         )

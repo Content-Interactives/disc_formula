@@ -24,7 +24,7 @@ const WasherMethod: React.FC<WasherMethodProps> = ({
     const targetRotation = useRef(0)
     
     // Get both functions for washer method
-    const outerFn = userFunctions[0] || "2*x"  // R(x) - outer function
+    const outerFn = userFunctions[0] || "2x"  // R(x) - outer function
     const innerFn = userFunctions[1] || "x"    // r(x) - inner function
 
     // Use washer animation hook
