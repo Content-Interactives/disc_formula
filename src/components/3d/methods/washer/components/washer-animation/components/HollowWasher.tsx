@@ -16,13 +16,11 @@ const HollowWasher: React.FC<HollowWasherProps> = ({
     innerRadius,
     height
 }) => {
-    // Create ring geometry for the washer faces
-    const ringGeometry = new THREE.RingGeometry(innerRadius, outerRadius, 32)
-    
     return (
         <group position={position} rotation={rotation}>
-            {/* Top face of washer */}
-            <mesh position={[height / 2, 0, 0]}>
+            {/* Top ring face - donut shaped top */}
+            <mesh position={[0, height / 2, 0]} rotation={[-Math.PI/2, 0, 0]}>
+                <ringGeometry args={[innerRadius, outerRadius, 32]} />
                 <meshPhysicalMaterial
                     color="#C0C0C0"
                     metalness={0.8}
@@ -31,8 +29,9 @@ const HollowWasher: React.FC<HollowWasherProps> = ({
                 />
             </mesh>
             
-            {/* Bottom face of washer */}
-            <mesh position={[-height / 2, 0, 0]} rotation={[Math.PI/2,0, 0]} geometry={ringGeometry}>
+            {/* Bottom ring face - donut shaped bottom */}
+            <mesh position={[0, -height / 2, 0]} rotation={[Math.PI/2, 0, 0]}>
+                <ringGeometry args={[innerRadius, outerRadius, 32]} />
                 <meshPhysicalMaterial
                     color="#C0C0C0"
                     metalness={0.8}
@@ -41,26 +40,24 @@ const HollowWasher: React.FC<HollowWasherProps> = ({
                 />
             </mesh>
             
-            {/* Outer edge of washer */}
-            <mesh renderOrder={1}>
+            {/* Outer wall - the outside of the washer */}
+            <mesh>
                 <cylinderGeometry args={[outerRadius, outerRadius, height, 32, 1, true]} />
                 <meshPhysicalMaterial
                     color="#C0C0C0"
                     metalness={0.8}
                     roughness={0.2}
-                    transparent={false}
-                    opacity={0.7}
                 />
             </mesh>
             
-            {/* Golden inner edge highlight */}
-            <mesh renderOrder={2}>
-                <cylinderGeometry args={[innerRadius - 0.01, innerRadius + 0.02, height, 32, 1, true]} />
-                <meshStandardMaterial
-                    color="#FFD700"
+            {/* Inner wall - the hole wall (visible inside) */}
+            <mesh>
+                <cylinderGeometry args={[innerRadius, innerRadius, height, 24, 1, true]} />
+                <meshPhysicalMaterial
+                    color="#A0A0A0"
                     metalness={0.6}
-                    roughness={0.3}
-                    side={THREE.DoubleSide}
+                    roughness={0.4}
+                    side={THREE.BackSide}
                 />
             </mesh>
         </group>
