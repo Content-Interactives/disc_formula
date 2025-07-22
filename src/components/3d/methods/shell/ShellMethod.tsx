@@ -194,12 +194,17 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
                                 args={[shell.radius + shell.thickness/2, shell.radius + shell.thickness/2, shell.height, 32, 1, true]}
                             >
                                 <meshPhysicalMaterial
-                                    color="#6A4C93"
-                                    metalness={0.7}
-                                    roughness={0.4}
-                                    opacity={0.8}
+                                    color="#E6D7F7"
+                                    metalness={0.1}
+                                    roughness={0.6}
+                                    opacity={0.85}
                                     transparent={true}
-                                    side={2} // DoubleSide
+                                    side={2}
+                                    iridescence={1.0}
+                                    iridescenceIOR={1.3}
+                                    iridescenceThicknessRange={[100, 800]}
+                                    clearcoat={0.3}
+                                    clearcoatRoughness={0.1}
                                 />
                             </Cylinder>
 
@@ -210,12 +215,12 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
                                 args={[shell.radius - shell.thickness/2, shell.radius - shell.thickness/2, shell.height, 32, 1, true]}
                             >
                                 <meshPhysicalMaterial
-                                    color="#6A4C93"
-                                    metalness={0.7}
-                                    roughness={0.4}
-                                    opacity={0.8}
+                                    color="#1a0d2e"
+                                    metalness={0.0}
+                                    roughness={0.9}
+                                    opacity={0.95}
                                     transparent={true}
-                                    side={2} // DoubleSide
+                                    side={2}
                                 />
                             </Cylinder>
 
@@ -226,12 +231,17 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
                             >
                                 <ringGeometry args={[shell.radius - shell.thickness/2, shell.radius + shell.thickness/2, 32]} />
                                 <meshPhysicalMaterial
-                                    color="#8A6BB1"
-                                    metalness={0.5}
-                                    roughness={0.3}
+                                    color="#D4BFFF"
+                                    metalness={0.2}
+                                    roughness={0.4}
                                     opacity={0.9}
                                     transparent={true}
-                                    side={2} // DoubleSide
+                                    side={2}
+                                    iridescence={0.8}
+                                    iridescenceIOR={1.2}
+                                    iridescenceThicknessRange={[200, 600]}
+                                    clearcoat={0.4}
+                                    clearcoatRoughness={0.05}
                                 />
                             </mesh>
 
@@ -242,12 +252,17 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
                             >
                                 <ringGeometry args={[shell.radius - shell.thickness/2, shell.radius + shell.thickness/2, 32]} />
                                 <meshPhysicalMaterial
-                                    color="#8A6BB1"
-                                    metalness={0.5}
-                                    roughness={0.3}
+                                    color="#D4BFFF"
+                                    metalness={0.2}
+                                    roughness={0.4}
                                     opacity={0.9}
                                     transparent={true}
-                                    side={2} // DoubleSide
+                                    side={2}
+                                    iridescence={0.8}
+                                    iridescenceIOR={1.2}
+                                    iridescenceThicknessRange={[200, 600]}
+                                    clearcoat={0.4}
+                                    clearcoatRoughness={0.05}
                                 />
                             </mesh>
                         </React.Fragment>
