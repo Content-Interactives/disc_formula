@@ -3,7 +3,7 @@
     "private": true,
     "version": "0.0.0",
     "type": "module",
-    "homepage": "https://content-interactives.github.io/disc_formula",
+    "homepage": "https://Content-Interactives.github.io/disc_formula",
     "scripts": {
         "dev": "vite",
         "build": "tsc -b && vite build",

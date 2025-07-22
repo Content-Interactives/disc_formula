@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { Line } from '@react-three/drei'
 import { Group } from 'three'
 import { evalFn3D } from '../../../../../utils/mathUtils'

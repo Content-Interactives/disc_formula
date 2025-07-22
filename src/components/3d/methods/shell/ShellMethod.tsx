@@ -7,7 +7,7 @@ import type { ShellMethodProps, ShellData } from './types'
 import { SHELL_PHASES, SHELL_ROTATION_SPEED, SHELL_TRAIL_COUNT } from './config'
 import ShellSurface from './components/ShellSurface'
 import ShellBoundaries from './components/ShellBoundaries'
-import { calculatePartialShellVolume } from './utils/volumeCalculator'
+// import { calculatePartialShellVolume } from './utils/volumeCalculator'
 
 const ShellMethod: React.FC<ShellMethodProps> = ({
     userFunctions,
@@ -32,7 +32,7 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
     const [visibleShells, setVisibleShells] = useState(0)
     const [phase, setPhase] = useState(0)
     const [isComplete, setIsComplete] = useState(false)
-    const [currentVolume, setCurrentVolume] = useState(0)
+    // const [currentVolume, setCurrentVolume] = useState(0)
     
     const userFn = userFunctions[0] || "x"  // Get first function for shell method
 
@@ -42,7 +42,7 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
             setVisibleShells(0)
             setPhase(0)
             setIsComplete(false)
-            setCurrentVolume(0)
+            // setCurrentVolume(0)
         }
     }, [showShells])
 
@@ -98,8 +98,8 @@ const ShellMethod: React.FC<ShellMethodProps> = ({
                 
                 // Calculate current volume
                 if (shells.length > 0) {
-                    const currentX = minBound + ((maxBound - minBound) * visibleShells) / shells.length
-                    setCurrentVolume(calculatePartialShellVolume(userFn, minBound, currentX, currentPhase.stepSize))
+                    // const currentX = minBound + ((maxBound - minBound) * visibleShells) / shells.length
+                    // setCurrentVolume(calculatePartialShellVolume(userFn, minBound, currentX, currentPhase.stepSize))
                 }
             } catch (e) {
                 // Handle function evaluation errors

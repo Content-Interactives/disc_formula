@@ -28,7 +28,7 @@ const WasherMethod: React.FC<WasherMethodProps> = ({
     const innerFn = userFunctions[1] || "x"    // r(x) - inner function
 
     // Use washer animation hook
-    const { washers, visibleWashers, currentVolume } = useWasherAnimation({
+    const { washers, visibleWashers } = useWasherAnimation({
         outerFn,
         innerFn,
         lowerBound,

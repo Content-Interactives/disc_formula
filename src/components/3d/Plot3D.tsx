@@ -24,8 +24,6 @@ const Plot3D: React.FC<Plot3DProps> = ({
     graphSize = 100,
     rotationBtn = false,
     discBtn = false,
-    volumeTrackerBtn = false,
-    toggleRotate,
     onRotationComplete,  // NEW: Accept completion callback
 }) => {
     return (

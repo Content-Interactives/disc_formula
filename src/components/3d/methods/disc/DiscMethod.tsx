@@ -7,7 +7,7 @@ import type { DiscMethodProps, DiscData } from './types'
 import { DISC_PHASES, DISC_ROTATION_SPEED, DISC_TRAIL_COUNT } from './config'
 import DiscSurface from './components/DiscSurface'
 import DiscBoundaries from './components/DiscBoundaries'
-import { calculatePartialDiscVolume } from './utils/volumeCalculator'
+// import { calculatePartialDiscVolume } from './utils/volumeCalculator'
 
 const DiscMethod: React.FC<DiscMethodProps> = ({
     userFunctions,
@@ -32,7 +32,7 @@ const DiscMethod: React.FC<DiscMethodProps> = ({
     const [visibleDiscs, setVisibleDiscs] = useState(0)
     const [phase, setPhase] = useState(0)
     const [isComplete, setIsComplete] = useState(false)
-    const [currentVolume, setCurrentVolume] = useState(0)
+    // const [currentVolume, setCurrentVolume] = useState(0)
     
     const userFn = userFunctions[0] || "x"  // Get first function for disc method
 
@@ -42,7 +42,7 @@ const DiscMethod: React.FC<DiscMethodProps> = ({
             setVisibleDiscs(0)
             setPhase(0)
             setIsComplete(false)
-            setCurrentVolume(0)
+            // setCurrentVolume(0)
         }
     }, [showDiscs])
 
@@ -97,8 +97,8 @@ const DiscMethod: React.FC<DiscMethodProps> = ({
                 
                 // Calculate current volume
                 if (discs.length > 0) {
-                    const currentX = minBound + ((maxBound - minBound) * visibleDiscs) / discs.length
-                    setCurrentVolume(calculatePartialDiscVolume(userFn, minBound, currentX, currentPhase.stepSize))
+                    // const currentX = minBound + ((maxBound - minBound) * visibleDiscs) / discs.length
+                    // setCurrentVolume(calculatePartialDiscVolume(userFn, minBound, currentX, currentPhase.stepSize))
                 }
             } catch (e) {
                 // Handle function evaluation errors
