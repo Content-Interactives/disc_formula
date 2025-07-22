@@ -1,4 +1,7 @@
 import React from 'react'
+import { Vector2 } from 'three'
+import { evaluate } from 'mathjs'
+import * as THREE from 'three'
 
 interface ShellSurfaceProps {
     userFn: string
@@ -7,21 +10,35 @@ interface ShellSurfaceProps {
     active: boolean
 }
 
-const ShellSurface: React.FC<ShellSurfaceProps> = ({ userFn: _userFn, lowerBound: _lowerBound, upperBound: _upperBound, active }) => {
+const ShellSurface: React.FC<ShellSurfaceProps> = ({ userFn, lowerBound, upperBound, active }) => {
     if (!active) return null
     
-    // TODO: Implement cylindrical shell surface generation
-    // This should create shells rotating around y-axis, not x-axis
-    // Each shell has radius = x, height = f(x)
+    const points: Vector2[] = []
+    const steps = 100  // Higher resolution for smooth surface
     
+    try {
+        for (let i = 0; i <= steps; i++) {
+            const x = lowerBound + ((upperBound - lowerBound) * i) / steps
+            const y = Math.abs(evaluate(userFn, { x }))
+            
+            // For shell method: rotating around y-axis
+            // x becomes radius, y stays as height
+            points.push(new Vector2(x, y))
+        }
+    } catch (e) {
+        console.warn('Error generating shell surface:', e)
+        return null
+    }
+
     return (
         <mesh>
-            <cylinderGeometry args={[1, 1, 2, 16]} />
+            <latheGeometry args={[points, 32]} />
             <meshPhongMaterial 
-                color="#9370DB"
+                color="#E8F5E8"
                 transparent={true}
                 opacity={0.3}
-                wireframe={true}
+                side={THREE.DoubleSide}
+                shininess={100}
             />
         </mesh>
     )

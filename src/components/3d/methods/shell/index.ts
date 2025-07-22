@@ -1,8 +1,6 @@
 export { default as ShellMethod } from './ShellMethod'
 export { default as ShellSurface } from './components/ShellSurface'
 export { default as ShellBoundaries } from './components/ShellBoundaries'
-export { default as Shell } from './components/Shell'
-export { useShellAnimation } from './hooks/useShellAnimation'
 export * from './types'
 export * from './config'
 export * from './utils/volumeCalculator' 

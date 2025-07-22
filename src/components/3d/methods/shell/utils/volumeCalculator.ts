@@ -11,12 +11,10 @@ export const calculateShellVolume = (
     try {
         for (let x = lowerBound; x <= upperBound; x += stepSize) {
             const y = evaluate(userFn, { x }) as number
-            const height = Math.abs(y)
-            const radius = Math.abs(x)  // For shell method, radius = x
             
-            // Volume of cylindrical shell: 2π * radius * height * thickness
-            // V = 2π ∫[a to b] x * f(x) dx
-            volume += 2 * Math.PI * radius * height * stepSize
+            // Shell method: V = 2π ∫[a to b] x·f(x) dx
+            // Each shell has radius = x, height = f(x), thickness = dx
+            volume += 2 * Math.PI * x * Math.abs(y) * stepSize
         }
     } catch (e) {
         console.warn('Error calculating shell volume:', e)
@@ -37,10 +35,9 @@ export const calculatePartialShellVolume = (
     try {
         for (let x = lowerBound; x <= currentX; x += stepSize) {
             const y = evaluate(userFn, { x }) as number
-            const height = Math.abs(y)
-            const radius = Math.abs(x)
             
-            volume += 2 * Math.PI * radius * height * stepSize
+            // Shell method: V = 2π ∫[a to b] x·f(x) dx
+            volume += 2 * Math.PI * x * Math.abs(y) * stepSize
         }
     } catch (e) {
         return 0

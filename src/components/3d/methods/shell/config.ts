@@ -9,10 +9,4 @@ export const SHELL_PHASES: ShellPhase[] = [
 ]
 
 export const SHELL_ROTATION_SPEED = 2
-export const SHELL_TRAIL_COUNT = 720
-
-// Shell-specific colors
-export const SHELL_COLORS = {
-    function: '#9370DB',   // Purple for function
-    surface: '#9370DB'     // Purple for final surface
-} as const 
+export const SHELL_TRAIL_COUNT = 720 
