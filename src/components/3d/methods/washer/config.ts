@@ -9,4 +9,4 @@ export const WASHER_PHASES: WasherPhase[] = [
 ]
 
 export const WASHER_ROTATION_SPEED = 2
-export const WASHER_TRAIL_COUNT = 720 
+export const WASHER_TRAIL_COUNT = 360  // Reduced from 720 due to double line rendering 

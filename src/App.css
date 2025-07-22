@@ -10,9 +10,9 @@ html,
 
 .top-formula-bar {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
+    top: 10px;
+    left: 10px;
+    width: calc(100vw - 20px);
     min-height: 60px;
     background: #ff9800;
     color: white;
@@ -134,25 +134,25 @@ html,
     width: 100vw;
     height: 100vh;
     z-index: 1;
-    padding-top: 80px;
+    padding-top: 90px;
 }
 
 @media (max-width: 768px) {
     .plot-area {
-        padding-top: 120px; /* More space for stacked mobile nav */
+        padding-top: 130px; /* More space for stacked mobile nav */
     }
 }
 
 @media (max-width: 480px) {
     .plot-area {
-        padding-top: 140px;
+        padding-top: 150px;
     }
 }
 
 .top-right-btn {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 30px;
+    right: 30px;
     padding: 12px 20px;
     background: #2196f3;
     color: white;

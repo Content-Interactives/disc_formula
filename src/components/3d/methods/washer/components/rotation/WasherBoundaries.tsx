@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Line } from '@react-three/drei'
 import { evalFn3D } from '../../../../../utils/mathUtils'
 import { COLORS } from '../../../../../utils/colors'
@@ -11,22 +11,30 @@ interface WasherBoundariesProps {
 }
 
 const WasherBoundaries: React.FC<WasherBoundariesProps> = ({ outerFn, innerFn, lowerBound, upperBound }) => {
-    // Calculate the actual outer and inner radii at bounds
-    const lowerOuterValue = Math.abs(evalFn3D(outerFn, lowerBound))
-    const lowerInnerValue = Math.abs(evalFn3D(innerFn, lowerBound))
-    const lowerActualOuter = Math.max(lowerOuterValue, lowerInnerValue)
-    const lowerActualInner = Math.min(lowerOuterValue, lowerInnerValue)
+    // Memoize boundary calculations for better performance
+    const { lowerBoundPoints, upperBoundPoints } = useMemo(() => {
+        // Calculate the actual outer and inner radii at bounds
+        const lowerOuterValue = Math.abs(evalFn3D(outerFn, lowerBound))
+        const lowerInnerValue = Math.abs(evalFn3D(innerFn, lowerBound))
+        const lowerActualOuter = Math.max(lowerOuterValue, lowerInnerValue)
+        const lowerActualInner = Math.min(lowerOuterValue, lowerInnerValue)
 
-    const upperOuterValue = Math.abs(evalFn3D(outerFn, upperBound))
-    const upperInnerValue = Math.abs(evalFn3D(innerFn, upperBound))
-    const upperActualOuter = Math.max(upperOuterValue, upperInnerValue)
-    const upperActualInner = Math.min(upperOuterValue, upperInnerValue)
+        const upperOuterValue = Math.abs(evalFn3D(outerFn, upperBound))
+        const upperInnerValue = Math.abs(evalFn3D(innerFn, upperBound))
+        const upperActualOuter = Math.max(upperOuterValue, upperInnerValue)
+        const upperActualInner = Math.min(upperOuterValue, upperInnerValue)
+
+        return {
+            lowerBoundPoints: [[lowerBound, lowerActualInner, 0], [lowerBound, lowerActualOuter, 0]] as [[number, number, number], [number, number, number]],
+            upperBoundPoints: [[upperBound, upperActualInner, 0], [upperBound, upperActualOuter, 0]] as [[number, number, number], [number, number, number]]
+        }
+    }, [outerFn, innerFn, lowerBound, upperBound])
 
     return (
         <>
             {/* Lower bound - from inner to outer radius (shows washer thickness) */}
             <Line 
-                points={[[lowerBound, lowerActualInner, 0], [lowerBound, lowerActualOuter, 0]]}
+                points={lowerBoundPoints}
                 color={COLORS.lowerBound} 
                 lineWidth={6} 
                 transparent={true}
@@ -35,7 +43,7 @@ const WasherBoundaries: React.FC<WasherBoundariesProps> = ({ outerFn, innerFn, l
             
             {/* Upper bound - from inner to outer radius (shows washer thickness) */}
             <Line 
-                points={[[upperBound, upperActualInner, 0], [upperBound, upperActualOuter, 0]]}
+                points={upperBoundPoints}
                 color={COLORS.upperBound} 
                 lineWidth={6} 
                 transparent={true}

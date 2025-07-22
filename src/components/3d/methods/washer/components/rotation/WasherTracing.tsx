@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useMemo } from 'react'
 import { Line } from '@react-three/drei'
 import { Group } from 'three'
 import { evalFn3D } from '../../../../../utils/mathUtils'
@@ -21,44 +21,49 @@ const WasherTracing: React.FC<WasherTracingProps> = ({
     trailRotations,
     groupRef
 }) => {
-    // Generate function points for actual outer and inner radii
-    const generateWasherFunctionPoints = (isOuter: boolean) => {
-        const points: [number, number, number][] = []
-        const steps = 100
+    // Memoized function points calculation - much more efficient!
+    const { outerPoints, innerPoints } = useMemo(() => {
+        const outer: [number, number, number][] = []
+        const inner: [number, number, number][] = []
+        
+        // Use fewer steps for better performance (match other methods)
+        const stepSize = 0.1  // Same as other methods instead of 100 steps
+        const steps = Math.floor((upperBound - lowerBound) / stepSize)
         
         try {
             for (let i = 0; i <= steps; i++) {
-                const x = lowerBound + ((upperBound - lowerBound) * i) / steps
+                const x = lowerBound + (i * stepSize)
                 const func1Value = Math.abs(evalFn3D(outerFn, x))
                 const func2Value = Math.abs(evalFn3D(innerFn, x))
                 
-                const radius = isOuter 
-                    ? Math.max(func1Value, func2Value)  // Outer radius = larger value
-                    : Math.min(func1Value, func2Value)  // Inner radius = smaller value
+                // Calculate once, use twice
+                const outerRadius = Math.max(func1Value, func2Value)
+                const innerRadius = Math.min(func1Value, func2Value)
                 
-                points.push([x, radius, 0])
+                outer.push([x, outerRadius, 0])
+                inner.push([x, innerRadius, 0])
             }
         } catch (e) {
             console.warn('Error generating washer function points:', e)
         }
         
-        return points
-    }
+        return { outerPoints: outer, innerPoints: inner }
+    }, [outerFn, innerFn, lowerBound, upperBound])  // Only recalculate when these change
 
     return (
         <>
-            {/* Trail copies - each trail is a copy of all children */}
+            {/* Trail copies - reuse memoized points */}
             {trailRotations.map((rotation, i) => (
                 <group key={`trail-${i}`} rotation={[rotation, 0, 0]}>
                     <Line 
-                        points={generateWasherFunctionPoints(true)}
+                        points={outerPoints}
                         color="#FF6B6B"
                         lineWidth={2}
                         transparent={true}
                         opacity={0.5}
                     />
                     <Line 
-                        points={generateWasherFunctionPoints(false)}
+                        points={innerPoints}
                         color="#4ECDC4"
                         lineWidth={2}
                         transparent={true}
@@ -73,17 +78,17 @@ const WasherTracing: React.FC<WasherTracingProps> = ({
                 </group>
             ))}
             
-            {/* Current rotating function */}
+            {/* Current rotating function - reuse memoized points */}
             <group ref={groupRef}>
                 <Line 
-                    points={generateWasherFunctionPoints(true)}
+                    points={outerPoints}
                     color="#FF6B6B"
                     lineWidth={2}
                     transparent={true}
                     opacity={0.8}
                 />
                 <Line 
-                    points={generateWasherFunctionPoints(false)}
+                    points={innerPoints}
                     color="#4ECDC4"
                     lineWidth={2}
                     transparent={true}
