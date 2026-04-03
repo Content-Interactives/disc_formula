@@ -1,48 +1,28 @@
-# DiscMethod-2 Interactive
+# disc_formula (WIP)
 
-This repository contains the code for the **DiscMethod-2 Interactive**, designed to help students explore and understand the concept of calculating the volume of solids of revolution using the disk method through engaging visuals and instant feedback.
+Experimental **React + TypeScript** UI for exploring solids of revolution / disc-method ideas: a collapsible **formula bar** (`Formula.tsx`) drives bounds and a string function, and **`Plot3D`** renders the 3D plot with optional rotation. Supporting modules include `VolumeFill`, `Axis`, `RotateX`, and math helpers under `components/utils/`.
 
----
-
-## 🔗 Live Interactive
-
-Try it out here:  
-👉 [https://content-interactives.github.io/DiscMethod-2/](https://content-interactives.github.io/DiscMethod-2/)
+Marketing copy, Common Core list, and CK-12 placement placeholders were moved to [`Standards.md`](Standards.md) (note: that file still uses the **“DiscMethod-2 Interactive”** title from the prior README—rename or edit if this fork is tracked separately).
 
 ---
 
-## 🌐 Where This Interactive Is Being Used
+## Repository layout (current)
 
-This interactive is currently featured in the following locations:
+| Path | Role |
+|------|------|
+| `main.tsx` | `createRoot`, mounts `App.tsx` |
+| `App.tsx` | `showBottomTab`, `userFunction`, bounds, `isRotating`; wires `Formula` + `Plot3D` |
+| `components/user_inputs/Formula.tsx` | User function + interval inputs |
+| `components/3d/Plot3D.tsx` | Main WebGL/3D visualization entry |
+| `components/3d/VolumeFill.tsx`, `Axis.tsx`, `RotateX.tsx` | Scene pieces |
+| `components/utils/mathUtils.ts`, `colors.ts` | Numerics / styling helpers |
+| `index.css`, `App.css` | Global and app styles |
+| `types/custom.d.ts` | TS declarations |
 
-- <img width="20" height="20" alt="image" src="https://github.com/user-attachments/assets/5d12571f-8e12-4441-98ab-c0bc94069a96" /> **CK-12 Intent Response**  
-  - 👉 PRODUCTION: [PENDING]  
-  - 👉 MASTER: [PENDING]
-- 📘 **CK-12 Flexbooks**  
-  - 👉 [PENDING: Book/lesson link where this interactive appears]
-
----
-
-## 📚 Standards & Subjects
-
-This interactive aligns with the following topics and standards:
-
-- **📂 Subject Area**: High School Math (Calculus)  
-- **🧮 Topic**: Volume of Solids of Revolution — Using the Disk Method  
-- **📏 Common Core**:  
-  - **CCSS.MATH.CONTENT.HSF.IF.C.7** – Graph functions expressed symbolically and show key features of the graph, by hand in simple cases and using technology for more complicated cases.  
-  - **CCSS.MATH.CONTENT.HSF.IF.C.7.A** – Graph linear and quadratic functions and show intercepts, maxima, and minima.  
-  - **CCSS.MATH.CONTENT.HSF.IF.C.7.B** – Graph square root, cube root, and piecewise-defined functions, including step functions and absolute value functions.  
-  - **CCSS.MATH.CONTENT.HSF.IF.C.8** – Write a function defined by an expression in different but equivalent forms to reveal and explain different properties of the function.  
-  - **CCSS.MATH.CONTENT.HSF.IF.C.9** – Compare properties of two functions each represented in a different way (algebraically, graphically, numerically in tables, or by verbal descriptions).  
-  - **CCSS.MATH.CONTENT.HSF.IF.C.9.A** – Compare properties of two functions each represented in a different way.  
-  - **CCSS.MATH.CONTENT.HSF.IF.C.9.B** – Compare properties of two functions each represented in a different way.  
-  - **CCSS.MATH.CONTENT.HSF.IF.C.9.C** – Compare properties of two functions each represented in a different way.
+There is **no `package.json` / `index.html`** in this working tree snapshot—treat as an incomplete Vite (or similar) project until those files are restored so `npm run dev` works.
 
 ---
 
-## 🛠️ Developer Notes
+## Intended stack (from prior developer notes)
 
-- Built with: React, Vite, TypeScript, Tailwind CSS  
-- Deployed via: GitHub Pages  
-- See `index.html` and supporting assets in `src/` and `public/` folders
+React, Vite, TypeScript, Tailwind CSS, GitHub Pages—confirm against a complete checkout.
